@@ -1,0 +1,48 @@
+package nl.ruud.Eindopdracht.dto;
+
+import nl.ruud.Eindopdracht.model.Customer;
+
+public class CustomerInputDto {
+
+
+    private String name;
+
+    private String email;
+
+    private String telephone;
+
+    public CustomerInputDto() {
+    }
+
+    public static Customer toCustomer(CustomerInputDto customerInputDto){
+    Customer customer= new Customer();
+        customer.setName(customerInputDto.getName());
+        customer.setEmail(customerInputDto.getEmail());
+        customer.setTelephone(customerInputDto.getTelephone());
+     return customer;}
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
