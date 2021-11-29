@@ -42,7 +42,7 @@ public class FileUploadController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileUpload.getFileName() + "\"")
-                .body(fileUpload.getBase64());
+                .body(fileUpload.getFile());
     }
 
     @PostMapping("")

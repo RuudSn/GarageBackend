@@ -28,6 +28,7 @@ public class CarService {
         return cars;
     }
 
+
     public Car getCarById(long id) {
         if(carRepository.existsById(id)){
             Car car = carRepository.findById(id).get();
@@ -47,7 +48,6 @@ public class CarService {
     }else {
         throw new RecordNotFoundException("Unknown ID");}
     }
-
 
 
     public void updateCar(long id, Car car) {

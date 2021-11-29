@@ -16,6 +16,8 @@ public class Part {
 
     private double price;
 
+    private Long quantity;
+
 
     @OneToMany(mappedBy = "part")
     private List<JobPart> parts;
@@ -25,10 +27,11 @@ public class Part {
     public Part() {
     }
 
-    public Part(Long id, String description, double price, List<JobPart> parts) {
+    public Part(Long id, String description, double price, Long quantity, List<JobPart> parts) {
         this.id = id;
         this.description = description;
         this.price = price;
+        this.quantity = quantity;
         this.parts = parts;
     }
 
@@ -56,6 +59,13 @@ public class Part {
         this.price = price;
     }
 
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
 
     public List<JobPart> getParts() {
         return parts;

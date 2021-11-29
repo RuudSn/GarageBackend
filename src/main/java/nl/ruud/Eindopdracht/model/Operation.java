@@ -16,13 +16,13 @@ public class Operation {
 
     private double price;
 
+
     @OneToMany(mappedBy = "operation")
     private List<JobOperation> operations;
 
 
     public Operation() {
     }
-
 
     public Operation(Long id, String description, double price, List<JobOperation> operations) {
         this.id = id;

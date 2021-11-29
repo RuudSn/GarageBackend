@@ -1,33 +1,35 @@
 package nl.ruud.Eindopdracht.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name="files")
 public class FileUpload {
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
 
+    @Column(name = "file_name")
     private String fileName;
 
-
+    @Column(name = "title")
     private String title;
 
-
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "file")
+    @Lob
+    private byte[] file;
 
-    private String base64;
+    @Column(name = "uploaded_timestamp")
+    private Date uploadedTimestamp;
 
-
-    private String location;
-
-
+    @Column(name = "uploaded_by_username")
+    private String uploadedByUsername;
 
     public long getId() {
         return id;
@@ -35,14 +37,6 @@ public class FileUpload {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 
     public String getFileName() {
@@ -69,14 +63,29 @@ public class FileUpload {
         this.description = description;
     }
 
-    public String getBase64() {
-        return base64;
+    public byte[] getFile() {
+        return file;
     }
 
-    public void setBase64(String base64) {
-        this.base64 = base64;
+    public void setFile(byte[] file) {
+        this.file = file;
     }
 
+    public Date getUploadedTimestamp() {
+        return uploadedTimestamp;
+    }
+
+    public void setUploadedTimestamp(Date uploadedTimestamp) {
+        this.uploadedTimestamp = uploadedTimestamp;
+    }
+
+    public String getUploadedByUsername() {
+        return uploadedByUsername;
+    }
+
+    public void setUploadedByUsername(String uploadedByUsername) {
+        this.uploadedByUsername = uploadedByUsername;
+    }
 
 
 
