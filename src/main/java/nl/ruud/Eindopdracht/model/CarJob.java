@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.security.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,13 +19,15 @@ import java.util.List;
 public class CarJob {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotNull
+    @Column
+    @Enumerated(EnumType.STRING)
     private CarJobStatus status;
 
-   // @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-
+    //@JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime repairDate;
 
     private String remarks;
@@ -41,7 +44,6 @@ public class CarJob {
 
     @ManyToOne
     @JoinColumn(name = "car_id")
-
     private Car car;
 
 

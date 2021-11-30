@@ -73,7 +73,7 @@ public class JobOperationService {
         JobOperationID ID = new JobOperationID(carJobId, operationId);
         if(jobOperationRepository.existsById(ID)){
             JobOperation existingJobOperation = jobOperationRepository.findById(ID).get();
-            existingJobOperation.setQuantity(jobOperation.getQuantity());
+            //existingJobOperation.setQuantity(jobOperation.getQuantity());
             jobOperationRepository.save(existingJobOperation); }
         else { throw new RecordNotFoundException(); }
     }

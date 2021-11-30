@@ -14,7 +14,6 @@ public class CarDto {
 
     private String type;
 
-    private CustomerDto customer;
 
 
 
@@ -28,7 +27,6 @@ public class CarDto {
         carDto.setId(car.getId());
         carDto.setLicensePlate(car.getLicensePlate());
         carDto.setType(car.getType());
-        carDto.setCustomer(CustomerDto.fromCustomer(car.getCustomer()));
         return carDto;
     }
 
@@ -58,13 +56,9 @@ public class CarDto {
         this.type = type;
     }
 
-    public CustomerDto getCustomer() {
-        return customer;
-    }
 
-    public void setCustomer(CustomerDto customer) {
-        this.customer = customer;
-    }
+
+
 }
 
 

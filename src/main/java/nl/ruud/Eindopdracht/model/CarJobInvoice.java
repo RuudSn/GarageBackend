@@ -12,7 +12,7 @@ import java.util.List;
 public class CarJobInvoice {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
     private String customerName;

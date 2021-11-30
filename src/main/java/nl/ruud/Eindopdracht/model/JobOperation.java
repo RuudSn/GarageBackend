@@ -20,17 +20,17 @@ public class JobOperation {
     @JoinColumn(name = "carjob_id")
     private CarJob carJob;
 
-    private double quantity;
+    //private double quantity;  wel description/remarks?
 
 
 
     public JobOperation() {
     }
-    public JobOperation(JobOperationID ID, Operation operation, CarJob carJob, double quantity) {
+    public JobOperation(JobOperationID ID, Operation operation, CarJob carJob) {
         this.ID = ID;
         this.operation =  operation;
         this.carJob = carJob;
-        this.quantity = quantity;
+
     }
 
 
@@ -50,13 +50,6 @@ public class JobOperation {
         this.carJob = carJob;
     }
 
-    public double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
-    }
 
     public JobOperationID getID() {
         return ID;

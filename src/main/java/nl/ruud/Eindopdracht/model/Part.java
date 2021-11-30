@@ -9,7 +9,7 @@ import java.util.List;
 public class Part {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String description;
@@ -21,7 +21,7 @@ public class Part {
 
     @OneToMany(mappedBy = "part")
     private List<JobPart> parts;
-   // @JoinColumn(name = "carjob_id", nullable = false) //?met joincolumn?
+
 
 
     public Part() {

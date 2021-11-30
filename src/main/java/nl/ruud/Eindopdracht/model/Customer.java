@@ -13,14 +13,13 @@ import java.util.List;
 public class Customer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
     private String telephone;
 
     @OneToMany(mappedBy = "customer")
-
     private List<CarJob> carJob;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)

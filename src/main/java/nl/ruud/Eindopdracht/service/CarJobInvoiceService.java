@@ -56,7 +56,7 @@ public class CarJobInvoiceService {
 
         CarJobInvoice carJobInvoice = new CarJobInvoice();
         CarJobStatus status = carJob.getStatus();
-        if((status == CarJobStatus.VOLTOOID) || (status == CarJobStatus.NIETUITVOEREN)){
+        if((status == CarJobStatus.COMPLETED) || (status == CarJobStatus.DONOTEXECUTE)){
 
             carJobInvoice.setCustomerName(carJob.getCustomer().getName());
             carJobInvoice.setRemarks(carJob.getRemarks());
@@ -70,9 +70,9 @@ public class CarJobInvoiceService {
             for(JobOperation jobOperation : jobOperations) {
                 operationDescriptions.add(jobOperation.getOperation().getDescription());
                 double price = jobOperation.getOperation().getPrice();
-                double quantity = jobOperation.getQuantity();
-                double charge = price * quantity;
-                operationsCharge = operationsCharge + charge;
+              //  double quantity = jobOperation.getQuantity();
+            //    double charge = price * quantity;
+                operationsCharge = operationsCharge ;
             }
             carJobInvoice.setPartDescriptions(operationDescriptions);
             double operationsWithVAT = operationsCharge * 1.21;
