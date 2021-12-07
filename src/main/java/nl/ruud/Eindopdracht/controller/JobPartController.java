@@ -41,14 +41,16 @@ public class JobPartController {
         return ResponseEntity.ok().body(jobPartService.getJobPartById(carJobId, partId));
     }
 
-    @GetMapping("/{carjob_id}")
+    @GetMapping("/{part_id}/jobs")
+    public ResponseEntity<Object> getJobPartsByPartId(@PathVariable("part_id") Long id){
+        return ResponseEntity.ok().body(jobPartService.getJobPartsByPartId(id));
+    }
+
+    @GetMapping("/{carjob_id}/parts")
     public ResponseEntity<Object> getJobPartsByCarJobId (@PathVariable("carjob_id") Long carJobId){
         return ResponseEntity.ok().body(jobPartService.getJobPartsByCarJobId(carJobId));
     }
-    @GetMapping("/{part_id}")
-    public ResponseEntity<Object> getJobParts(@PathVariable("id") Long id){
-        return ResponseEntity.ok().body(jobPartService.getJobPartsByPartId(id));
-    }
+
 
     @DeleteMapping("/{carjob_id}/{part_id}")
     public ResponseEntity<Object> removeJobPart (@PathVariable("carjob_id") Long carJobId,

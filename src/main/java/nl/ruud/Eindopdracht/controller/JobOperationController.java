@@ -40,12 +40,12 @@ public class JobOperationController {
         return ResponseEntity.ok().body(jobOperationService.getJobOperationById(carJobId, operationId));
     }
 
-    @GetMapping("/{carjob_id}")
+    @GetMapping("/{carjob_id}/operations")
     public ResponseEntity<Object> getJobOperationsByCarJobId (@PathVariable("carjob_id") Long carJobId){
         return ResponseEntity.ok().body(jobOperationService.getJobOperationsByCarJobId(carJobId));
     }
-    @GetMapping("/{operation_id}")
-    public ResponseEntity<Object> getJobOperations(@PathVariable("id") Long id){
+    @GetMapping("/{operation_id}/jobs")
+    public ResponseEntity<Object> getJobOperations(@PathVariable("operation_id") Long id){
         return ResponseEntity.ok().body(jobOperationService.getJobOperationsByOperationId(id));
     }
 

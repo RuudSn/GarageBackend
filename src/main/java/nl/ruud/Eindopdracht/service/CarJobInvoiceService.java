@@ -61,20 +61,18 @@ public class CarJobInvoiceService {
             carJobInvoice.setCustomerName(carJob.getCustomer().getName());
             carJobInvoice.setRemarks(carJob.getRemarks());
 
+            carJobId = carJob.getId();
             List<JobOperation> jobOperations = jobOperationRepository.findAllByCarJobId(carJobId);
             List<String> operationDescriptions = new ArrayList<String>();
-
 
 
             double operationsCharge  = 0;
             for(JobOperation jobOperation : jobOperations) {
                 operationDescriptions.add(jobOperation.getOperation().getDescription());
                 double price = jobOperation.getOperation().getPrice();
-              //  double quantity = jobOperation.getQuantity();
-            //    double charge = price * quantity;
-                operationsCharge = operationsCharge ;
+                operationsCharge = operationsCharge + price ;
             }
-            carJobInvoice.setPartDescriptions(operationDescriptions);
+            carJobInvoice.setOperationDescriptions(operationDescriptions);
             double operationsWithVAT = operationsCharge * 1.21;
             carJobInvoice.setOperationsCharge(operationsWithVAT);
 
@@ -92,7 +90,6 @@ public class CarJobInvoiceService {
                 partsCharge = partsCharge +charge;
             }
             carJobInvoice.setPartDescriptions(partDescriptions);
-
             double partsWithVAT = partsCharge * 1.21;
             carJobInvoice.setPartsCharge(partsWithVAT);
 
@@ -124,7 +121,7 @@ public class CarJobInvoiceService {
             carJob = carJobRepository.findByCustomerNameAndCustomerEmail(name, email);
 
 
-        }else if (carJobId == null  && name != null && telephone != null) {
+        }else if (name != null && telephone != null) {
 
             carJob = carJobRepository.findByCustomerNameAndCustomerTelephone(name, telephone);
 

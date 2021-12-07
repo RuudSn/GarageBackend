@@ -38,7 +38,7 @@ public class CarService {
     }
 
     public Optional<Car> getCarByLicensePlate(String licensePlate){
-        return carRepository.findCarByLicensePlate(licensePlate);
+        return carRepository.findByLicensePlate(licensePlate);
     }
 
 

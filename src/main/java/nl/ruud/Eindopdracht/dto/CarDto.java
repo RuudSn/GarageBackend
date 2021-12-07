@@ -1,7 +1,5 @@
 package nl.ruud.Eindopdracht.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import nl.ruud.Eindopdracht.model.Car;
 
 public class CarDto {

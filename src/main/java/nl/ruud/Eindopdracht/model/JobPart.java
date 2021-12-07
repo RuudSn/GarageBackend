@@ -1,5 +1,7 @@
 package nl.ruud.Eindopdracht.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,12 +15,14 @@ public class JobPart {
     @ManyToOne
     @MapsId("partId")
     @JoinColumn(name = "part_id")
+    @JsonIgnore
     private Part part;
 
 
     @ManyToOne
     @MapsId("carJobId")
     @JoinColumn(name = "carjob_id")
+    @JsonIgnore
     private CarJob carJob;
 
     private double quantity;

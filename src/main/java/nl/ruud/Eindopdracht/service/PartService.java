@@ -24,9 +24,9 @@ public class PartService {
         return partRepository.findAll();
     }
 
-    public Optional<Part> getPartById(long id) {
+    public Part getPartById(long id) {
         if (partRepository.existsById(id)) {
-            return partRepository.findById(id);
+            return partRepository.findById(id).get();
         } else {
             throw new RecordNotFoundException();
         }

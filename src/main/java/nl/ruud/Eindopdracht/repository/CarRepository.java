@@ -9,7 +9,7 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     Boolean existsByLicensePlate(String licensePlate);
 
-    Optional<Car> findCarByLicensePlate(String licensePlate);
+    Optional<Car> findByLicensePlate(String licensePlate);
 
 
 }

@@ -14,6 +14,14 @@ public class CustomerInputDto {
     public CustomerInputDto() {
     }
 
+    public CustomerInputDto(String name, String email, String telephone) {
+        this.name = name;
+        this.email = email;
+        this.telephone = telephone;
+    }
+
+
+
     public static Customer toCustomer(CustomerInputDto customerInputDto){
     Customer customer= new Customer();
         customer.setName(customerInputDto.getName());

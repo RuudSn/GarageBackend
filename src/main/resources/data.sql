@@ -36,7 +36,7 @@ VALUES  ( 'workinghour complete on 10min.', 66.00, 1),
         ( 'air-filter-WER2', 76.50, 18),
         ( 'injector vilt65', 323.00,  3),
         ( 'injector flip12', 299.98, 5),
-        ('timing belt BGU/BSE', 259.00, 6 );
+        ('timing belt BG-2x', 259.00, 6 );
 
 
  INSERT INTO operations ( description, price)

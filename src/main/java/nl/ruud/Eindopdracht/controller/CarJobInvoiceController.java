@@ -41,8 +41,8 @@ public class CarJobInvoiceController {
         return ResponseEntity.ok().body(carJobInvoices);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getInvoiceById(@PathVariable("id") Long id ){
+    @GetMapping("/{carjobinvoice_id}")
+    public ResponseEntity<Object> getInvoiceById(@PathVariable("carjobinvoice_id") Long id ){
         return ResponseEntity.ok().body(carJobInvoiceService.getInvoiceById(id));
     }
 
@@ -60,8 +60,8 @@ public class CarJobInvoiceController {
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> removeInvoice(@PathVariable("id") long id) {
+    @DeleteMapping("/{carjobinvoice_id}")
+    public ResponseEntity<Object> removeInvoice(@PathVariable("carjobinvoice_id") long id) {
         carJobInvoiceService.removeCarJobInvoiceById(id);
         return ResponseEntity.noContent().build().ok("Deleted");
     }
