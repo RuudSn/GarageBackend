@@ -38,12 +38,13 @@ public class CarJobInvoice {
 
 
 
-    public CarJobInvoice(Long Id, String customerName, String remarks,List<String> partDescriptions,
+    public CarJobInvoice( String customerName, String remarks, List<String> operationDescriptions,
+                         double operationsCharge,List<String> partDescriptions,
                                                             double partsCharge, double totalCharge) {
-        this.Id = Id;
         this.customerName = customerName;
         this.remarks = remarks;
         this.operationDescriptions = operationDescriptions;
+        this.operationsCharge = operationsCharge;
         this.partDescriptions = partDescriptions;
         this.partsCharge = partsCharge;
         this.totalCharge = totalCharge;
