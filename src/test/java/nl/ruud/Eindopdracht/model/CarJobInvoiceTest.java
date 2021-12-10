@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class CarJobInvoiceTest {
 
@@ -25,6 +26,12 @@ public class CarJobInvoiceTest {
         partDescriptions.add("part2");
         this.invoice = new CarJobInvoice("jansen", "test", operationDescriptions,
                 50.00,partDescriptions,100.50, 160.00);
+    }
+
+
+    @Test
+    void testGetId(){
+        assertNotNull(this.invoice.getId());
     }
 
     @Test
@@ -94,6 +101,7 @@ public class CarJobInvoiceTest {
         double total = this.invoice.getTotalCharge();
         assertEquals(expect, total );
     }
+
 
 
 

@@ -33,8 +33,7 @@ public class Car {
     public Car() {
     }
 
-    public Car(Long id,String licensePlate, String type) {
-        this.id = id;
+    public Car(String licensePlate, String type) {
         this.licensePlate = licensePlate;
         this.type = type;
     }

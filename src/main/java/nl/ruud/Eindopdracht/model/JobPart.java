@@ -32,8 +32,7 @@ public class JobPart {
     }
 
 
-    public JobPart(JobPartID ID, CarJob carJob, double quantity) {
-        this.ID = ID;
+    public JobPart( CarJob carJob, double quantity) {
         this.part = part;
         this.carJob = carJob;
         this.quantity = quantity;

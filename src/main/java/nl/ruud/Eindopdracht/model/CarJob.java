@@ -50,17 +50,15 @@ public class CarJob {
     public CarJob() {
     }
 
-    public CarJob(Long id,CarJobStatus status, LocalDateTime repairDate, String remarks,
-               List<JobOperation> operations, List<JobPart> parts, Customer customer,Car car) {
-        this.id = id;
+    public CarJob(CarJobStatus status, LocalDateTime repairDate, String remarks,
+               Customer customer,Car car) {
         this.status = status;
         this.repairDate = repairDate;
         this.remarks = remarks;
-        this.operations = operations;
-        this.parts = parts;
         this.customer = customer;
         this.car = car;
     }
+
 
     public Long getId() {
         return id;

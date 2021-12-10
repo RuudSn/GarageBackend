@@ -30,8 +30,7 @@ public class JobOperation {
 
     public JobOperation() {
     }
-    public JobOperation(JobOperationID ID, Operation operation, CarJob carJob) {
-        this.ID = ID;
+    public JobOperation( Operation operation, CarJob carJob) {
         this.operation =  operation;
         this.carJob = carJob;
 

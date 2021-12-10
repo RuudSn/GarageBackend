@@ -31,8 +31,7 @@ public class Part {
     public Part() {
     }
 
-    public Part(Long id, String description, double price, Long quantity, List<JobPart> parts) {
-        this.id = id;
+    public Part( String description, double price, Long quantity, List<JobPart> parts) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;

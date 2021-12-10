@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "carjobinvoices")
 public class CarJobInvoice {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;

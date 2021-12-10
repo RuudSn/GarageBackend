@@ -24,8 +24,7 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(Long id, String description, double price, List<JobOperation> operations) {
-        this.id = id;
+    public Operation(String description, double price, List<JobOperation> operations) {
         this.description = description;
         this.price = price;
         this.operations = operations;

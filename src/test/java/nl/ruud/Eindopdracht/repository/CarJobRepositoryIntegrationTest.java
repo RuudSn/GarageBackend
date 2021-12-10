@@ -20,6 +20,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @DataJpaTest
 public class CarJobRepositoryIntegrationTest {
 
+    private CarJob carJob;
+
     @Autowired
     private TestEntityManager entityManager;
 
@@ -30,13 +32,13 @@ public class CarJobRepositoryIntegrationTest {
     @Test
     public void whenFindByStatusThenReturnCarjob(){
 
-        Customer customer = new Customer("jansen", "jansen@mail", "1234");
-        Car car = new Car("123AB", "auto");
+       // Customer customer = new Customer("jansen", "jansen@mail", "1234");
+      //  Car car = new Car("123AB", "auto");
         LocalDateTime date = LocalDateTime.of(2020, Month.JANUARY, 18, 10,30);
-        CarJob job = new CarJob(  CarJobStatus.PLANNED, date, "test2", customer, car );
+        CarJob job = new CarJob( );
+        job.setStatus(CarJobStatus.PLANNED);
         entityManager.persist(job);
         entityManager.flush();
-
         CarJob found = (CarJob) carJobRepository.findByStatus(CarJobStatus.PLANNED);
 
         assertThat(found.getStatus()).isEqualTo(CarJobStatus.PLANNED);
