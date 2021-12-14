@@ -17,6 +17,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest()
@@ -59,15 +60,16 @@ public class CustomerServiceTest {
         customer.setName("jansen");
         customer.setEmail("jansen@mail");
         customer.setTelephone("1234");
-        customer.setId(12L);
+        customer.setId(1L);
 
         Mockito
-               .doReturn(Optional.of(customer)).when(customerRepository).findById(12L);
+                .when(customerRepository.existsById(1L))
+                .thenReturn(true);
+        Mockito
+               .doReturn(Optional.of(customer)).when(customerRepository).findById(1L);
 
-        Customer expect = customer;
-        Customer found = customerService.getCustomerById(12L);
+        assertThat(customerService.getCustomerById(1L)).isEqualTo(customer);
 
-        assertEquals(expect, found);
     }
 
 

@@ -5,12 +5,12 @@ import nl.ruud.Eindopdracht.dto.InvoiceInputDto;
 import nl.ruud.Eindopdracht.model.*;
 import nl.ruud.Eindopdracht.repository.CarJobInvoiceRepository;
 import nl.ruud.Eindopdracht.repository.CarJobRepository;
+import nl.ruud.Eindopdracht.repository.JobOperationRepository;
+import nl.ruud.Eindopdracht.repository.JobPartRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,8 +26,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//@SpringBootTest()
-//@ContextConfiguration(classes= {GarageBackendApplication.class})
 
 @ExtendWith(MockitoExtension.class)
 public class CarJobInvoiceServiceTest {
@@ -35,37 +33,87 @@ public class CarJobInvoiceServiceTest {
     @Mock
     CarJobRepository carJobRepository;
 
+    @Mock
+    CarJobInvoiceRepository carJobInvoiceRepository;
+
+    @Mock
+    JobOperationRepository jobOperationRepository;
+
+    @Mock
+    JobPartRepository jobPartRepository;
+
     @InjectMocks
     CarJobInvoiceService carJobInvoiceService;
 
     @BeforeEach
-    void setup(){
-        CarJobInvoiceService carJobInvoiceService = new CarJobInvoiceService();
+    void setup() {
+        CarJobInvoiceService carJobInvoiceService;
     }
 
 
-    //    CarJobInvoiceService carJobInvoiceService;
-
+    @Captor
+    ArgumentCaptor<CarJobInvoice> carJobInvoiceCaptor;
 
 
     @Test
-    public void givenCarJobWithStatusCOMPLETEDOrDONOTEXECUTEShouldReturnTrue(){
+    public void testGetCarJobInvoices(){
+        CarJobInvoice carJobInvoice = new CarJobInvoice();
+        CarJobInvoice carJobInvoice2 = new CarJobInvoice();
+
+        List<CarJobInvoice> invoices = new ArrayList<>();
+        invoices.add(carJobInvoice);
+        invoices.add(carJobInvoice2);
+
+        Mockito
+                .doReturn(invoices).when(carJobInvoiceRepository).findAll();
+
+        assertEquals(2, carJobInvoiceService.getInvoices().size());
+        assertEquals(carJobInvoice2,carJobInvoiceService.getInvoices().get(1));
+
+    }
+
+    @Test
+    public void testInvoiceById(){
+        CarJobInvoice carJobInvoice = new CarJobInvoice();
+        carJobInvoice.setId(1L);
+
+        Mockito
+                .when(carJobInvoiceRepository.existsById(1L))
+                .thenReturn(true);
+        Mockito
+                .doReturn(Optional.of(carJobInvoice)).when(carJobInvoiceRepository).findById(1L);
+
+        assertEquals(carJobInvoice, carJobInvoiceService.getInvoiceById(1L));
+    }
+
+    @Test
+    public void testAddCarJobInvoiceShouldReturnAnInvoice(){
 
         CarJob job = new CarJob();
-      //  job.setId(12L);
-        job.setStatus(CarJobStatus.DONOTEXECUTE);
-        //job.setRemarks("Test");
-       // LocalDateTime date = LocalDateTime.of(2021, Month.APRIL,10,10,30);
-       // job.setRepairDate(date);
+        Long carJobId = 12L;
+        job.setId(carJobId);
+        job.setStatus(CarJobStatus.COMPLETED);
 
+        Operation operation = new Operation();
+        operation.setDescription("testOperation");
+
+
+
+
+        JobOperation jobOperation = new JobOperation();
+        jobOperation.setOperation(operation);
+        jobOperation.setCarJob(job);
+        List<JobOperation> jobOperations = new ArrayList<>();
+        jobOperations.add(jobOperation);
 
 
         Part part = new Part();
         part.setDescription("testPart1");
         part.setPrice(100.00);
-        part.setQuantity(2L);
-        part.setId(13L);
 
+        Part part2 = new Part();
+        part2.setPrice(25.50);
+        part2.setDescription("testPart2");
 
 
         Customer customer = new Customer();
@@ -78,15 +126,58 @@ public class CarJobInvoiceServiceTest {
         car.setType("auto");
         car.setLicensePlate("12AB34");
         car.setCustomer(customer);
-        car.setId(16L);
+
+        job.setCustomer(customer);
+        job.setCar(car);
 
         JobPart jobPart = new JobPart();
         jobPart.setCarJob(job);
         jobPart.setPart(part);
+        jobPart.setQuantity(1L);
+
+        JobPart jobPart2 =new JobPart();
+        jobPart2.setCarJob(job);
+        jobPart2.setPart(part2);
+        jobPart2.setQuantity(2L);
+
+        List<JobPart> jobParts = new ArrayList<>();
+        jobParts.add(jobPart);
+        jobParts.add(jobPart2);
 
 
 
-        CarJobInvoiceService carJobInvoiceService = new CarJobInvoiceService();
+
+        Mockito
+                .doReturn(job).when(carJobRepository).findByCustomerNameAndCustomerEmail("jansen","jans@mail" );
+        Mockito
+                .doReturn(jobOperations).when(jobOperationRepository).findAllByCarJobId(carJobId);
+
+        Mockito
+                .doReturn(jobParts).when(jobPartRepository).findAllByCarJobId(carJobId);
+     //   Mockito
+      //          .doReturn(carJobInvoice).when(carJobInvoiceRepository).save(carJobInvoice);
+
+
+       carJobInvoiceService.addCarJobInvoice(null, "jansen", null, "jans@mail", null);
+
+
+        Mockito
+                .verify(carJobInvoiceRepository).save(carJobInvoiceCaptor.capture());
+
+        CarJobInvoice carJobInvoice1 = carJobInvoiceCaptor.getValue();
+        double expect = (2*25.50)*1.21 + (1*100)*1.21;
+
+
+        assertEquals("jansen", carJobInvoice1.getCustomerName() );
+        assertEquals(expect, carJobInvoice1.getPartsCharge() );
+        assertEquals("testOperation", carJobInvoice1.getOperationDescriptions().get(0));
+    }
+
+    @Test
+    public void givenCarJobWithStatusCOMPLETEDOrDONOTEXECUTEShouldReturnTrue(){
+
+        CarJob job = new CarJob();
+        job.setStatus(CarJobStatus.DONOTEXECUTE);
 
         boolean statusOk = carJobInvoiceService.StatusCheck(job);
 
@@ -94,7 +185,7 @@ public class CarJobInvoiceServiceTest {
     }
 
     @Test
-    public void testGetOperationDescriptins(){
+    public void testGetOperationDescriptions(){
 
         CarJob job = new CarJob();
         job.setId(12L);
@@ -111,13 +202,10 @@ public class CarJobInvoiceServiceTest {
 
         JobOperation jobOperationB = new JobOperation();
         jobOperationB.setOperation(operationB);
-        jobOperationB.setCarJob(job);
 
         List<JobOperation> jobOperations = new ArrayList<>();
         jobOperations.add(jobOperation);
         jobOperations.add(jobOperationB);
-
-        CarJobInvoiceService carJobInvoiceService = new CarJobInvoiceService();
 
         assertEquals(2, carJobInvoiceService.getOperationsDescriptions(jobOperations).size());
         assertEquals("testOperation2", carJobInvoiceService.getOperationsDescriptions(jobOperations).get(1));
@@ -130,40 +218,29 @@ public class CarJobInvoiceServiceTest {
 
         Part part = new Part();
         part.setDescription("testPart1");
-       // part.setPrice(100.00);
-      // part.setQuantity(2L);
-      //  part.setId(13L);
 
         JobPart jobPart = new JobPart();
-      //  jobPart.setCarJob(job);
         jobPart.setPart(part);
 
         List<JobPart> jobParts = new ArrayList<>();
         jobParts.add(jobPart);
 
-        CarJobInvoiceService carJobInvoiceService = new CarJobInvoiceService();
-
         assertEquals("testPart1", carJobInvoiceService.getPartDescriptions(jobParts).get(0));
     }
     @Test
     public void testCalculateOperationsCharge(){
-
         CarJob job = new CarJob();
 
         Operation operation = new Operation();
-     //   operation.setDescription("testOperation1");
         operation.setPrice(50.50);
-   //     operation.setId(14L);
 
         JobOperation jobOperation = new JobOperation();
         jobOperation.setOperation(operation);
-     //   jobOperation.setCarJob(job);
 
         List<JobOperation> jobOperations = new ArrayList<>();
         jobOperations.add(jobOperation);
-
-        CarJobInvoiceService carJobInvoiceService = new CarJobInvoiceService();
-        double expect = 50.50 * 1.21;
+        
+        double expect = 50.50 * 1.21;               // incl 21% VAT
         assertEquals(expect, carJobInvoiceService.calculateOperationsCharge(jobOperations));
     }
 
@@ -188,42 +265,108 @@ public class CarJobInvoiceServiceTest {
         jobParts.add(jobPart);
         jobParts.add(jobPart2);
 
-     //   CarJobInvoiceService carJobInvoiceService = new CarJobInvoiceService();
-        double expected = (2*25.50)*1.21 + (2*50)*1.21;
+        double expected = (2*25.50)*1.21 + (2*50)*1.21;      // incl. 21% VAT
         assertEquals(expected, carJobInvoiceService.calculatePartsCharge(jobParts));
     }
 
         @Test
-        public void testGetCarJobFromOptionalInput(){
+        public void testGetCarJobFromOptionalInputCarJobId(){
+        CarJob carJob = new CarJob();Customer customer = new Customer();
+        carJob.setId(1L);
+
+            Mockito
+                    .doReturn(Optional.of(carJob)).when(carJobRepository).findById(1L);
+            Mockito
+                    .when(carJobRepository.existsById(1L))
+                    .thenReturn(true);
+
+          CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  1L, "jansen", null, "null",null);
+
+        assertEquals(carJob ,found);
+
+        }
+
+    @Test
+    public void testGetCarJobFromOptionalInputNameAndEmail(){
+
+        CarJob carJob = new CarJob();
+        Customer customer = new Customer();
+        customer.setName("jansen");
+        customer.setEmail("jansen@mail");
+        carJob.setCustomer(customer);
+
+        Mockito
+                .doReturn(carJob).when(carJobRepository).findByCustomerNameAndCustomerEmail("jansen","jansen@mail" );
+
+        CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  null, "jansen", null, "jansen@mail",null);
+
+        assertEquals(carJob ,found);
+    }
+    @Test
+    public void testGetCarJobFromOptionalInputNameAndTelephone(){
 
         CarJob carJob = new CarJob();
         Customer customer = new Customer();
         customer.setName("jansen");
         customer.setTelephone("1234");
-        customer.setEmail("jansen@mail");
         carJob.setCustomer(customer);
+
+        Mockito
+                .doReturn(carJob).when(carJobRepository).findByCustomerNameAndCustomerTelephone("jansen", "1234" );
+
+        CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  null, "jansen", "1234", null,null);
+
+        assertEquals(carJob ,found);
+    }
+
+    @Test
+    public void testGetCarJobFromOptionalInputLicensePlate(){
+
+        CarJob carJob = new CarJob();
         Car car = new Car();
         car.setLicensePlate("123AS45");
         carJob.setCar(car);
-        Long id  = 15L;
-        carJob.setId(id);
-        carJob.setRemarks("test");
 
-     //   CarJobInvoiceService carJobInvoiceService = new CarJobInvoiceService();
+        Mockito
+                .doReturn(carJob).when(carJobRepository).findByCarLicensePlate("123AS45" );
 
+        CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  null, null, null, null,"123AS45");
 
+        assertEquals(carJob ,found);
+    }
 
-            Mockito
-                    .doReturn(Optional.of(carJob)).when(carJobRepository).findById(id);
+    @Test
+    public void testGetCarJobFromOptionalInputWhenTwoOptions(){
 
+        CarJob carJob = new CarJob();
+        Car car = new Car();
+        car.setLicensePlate("123AS45");
+        carJob.setCar(car);
+        carJob.setId(1L);
 
-        assertEquals(carJob, carJobInvoiceService.getCarJobFromOptionalInput(  id, "jansen", "1234", "jansen@mail","123AS45"));
+        Mockito
+                .doReturn(Optional.of(carJob)).when(carJobRepository).findById(1L);
+        Mockito
+                .when(carJobRepository.existsById(1L))
+                .thenReturn(true);
 
-        }
+        CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  1L, null, null, null,"123AS45");
 
+        assertEquals(carJob ,found);
+    }
+    @Test
+    public void testRemoveCarJobInvoiceById() {
+        CarJobInvoice carJobInvoice = new CarJobInvoice();
+        carJobInvoice.setId(1L);
 
+        Mockito
+                .when(carJobInvoiceRepository.existsById(1L))
+                .thenReturn(true);
 
+        carJobInvoiceService.removeCarJobInvoiceById(1L);
+        Mockito.verify(carJobInvoiceRepository, Mockito.times(1)).deleteById(1L);
 
+    }
 
 
 }

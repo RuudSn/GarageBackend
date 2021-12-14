@@ -35,9 +35,8 @@ public class CarJobInvoiceService {
         this.carJobInvoiceRepository = carJobInvoiceRepository;
     }
 
-    public CarJobInvoiceService() {
 
-    }
+
 
     public List<CarJobInvoice> getInvoices(){
         List<CarJobInvoice> inv = carJobInvoiceRepository.findAll();
@@ -180,7 +179,6 @@ public class CarJobInvoiceService {
         carJobInvoiceRepository.deleteById(id);}else{
             throw new RecordNotFoundException(""); }
     }
-
 
 
 
