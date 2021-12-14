@@ -29,10 +29,7 @@ public class CarJobInvoiceTest {
     }
 
 
-    @Test
-    void testGetId(){
-        assertNotNull(this.invoice.getId());
-    }
+
 
     @Test
     void testGetCustomerName(){

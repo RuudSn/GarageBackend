@@ -87,11 +87,11 @@ public class CarJobService {
         for (String key : fields.keySet()){
             switch(key.toLowerCase()){
                 case "status":
-                    if (  fields.get(key) instanceof CarJobStatus){
-                    carJob.setStatus((CarJobStatus) fields.get(key) );}
+                                                                            //    if (  fields.get(key) instanceof CarJobStatus){
+                    carJob.setStatus((CarJobStatus) fields.get(key) );      //}
                     break;
-                case "repairdate" : if(fields.get(key)instanceof LocalDateTime){
-                    carJob.setRepairDate((LocalDateTime) fields.get(key));}
+                case "repairdate" :                                        //if(fields.get(key)instanceof LocalDateTime){
+                    carJob.setRepairDate((LocalDateTime) fields.get(key));     //}
                     break;
                 case "remarks" : carJob.setRemarks((String) fields.get(key));
                     break;

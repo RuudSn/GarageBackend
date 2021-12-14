@@ -3,6 +3,7 @@ package nl.ruud.Eindopdracht.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 public class JobOperationID implements Serializable{
@@ -20,6 +21,19 @@ public class JobOperationID implements Serializable{
     public JobOperationID(Long operationId, Long carJobId) {
         this.operationId = operationId;
         this.carJobId = carJobId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JobOperationID that = (JobOperationID) o;
+        return operationId.equals(that.operationId) && carJobId.equals(that.carJobId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(operationId, carJobId);
     }
 
     public Long getOperationId() {

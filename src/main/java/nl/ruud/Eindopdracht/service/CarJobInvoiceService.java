@@ -35,7 +35,11 @@ public class CarJobInvoiceService {
         this.carJobInvoiceRepository = carJobInvoiceRepository;
     }
 
-   public List<CarJobInvoice> getInvoices(){
+    public CarJobInvoiceService() {
+
+    }
+
+    public List<CarJobInvoice> getInvoices(){
         List<CarJobInvoice> inv = carJobInvoiceRepository.findAll();
         return inv;
    }
@@ -47,7 +51,7 @@ public class CarJobInvoiceService {
    }
 
 
-    // berekenen totaalbedragen incl. btw  en genereren factuur
+    // verzamelen info, berekenen totaalbedragen incl. btw  en genereren factuur
 
     public Long addCarJobInvoice(Long carJobId, String name, String telephone, String email, String licensePlate) {
 
@@ -93,6 +97,7 @@ public class CarJobInvoiceService {
 
         return carJobInvoice.getId();
     }
+
 
 
         // ophalen van juiste carjob voor invoice aan hand van opgave aan balie van ofwel: carjobID, klantnaam+telfoonnr,

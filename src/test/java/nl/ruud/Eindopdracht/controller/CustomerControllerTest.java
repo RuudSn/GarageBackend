@@ -44,6 +44,10 @@ public class CustomerControllerTest {
     public void testHTTPRequestMatching() throws Exception{
 
         Customer customer = new Customer("testnaam", "test@mail", "test123");
+        customer.setName("jansen");
+        customer.setEmail("jansen@mail");
+        customer.setTelephone("1234");
+        customer.setId(12L);
 
         List<Customer> allCustomers = Arrays.asList(customer);
 

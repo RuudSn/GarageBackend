@@ -38,6 +38,9 @@ public class JobPart {
         this.quantity = quantity;
     }
 
+
+
+
     public Part getPart() {
         return part;
     }

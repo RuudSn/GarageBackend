@@ -14,15 +14,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import javax.sql.DataSource;
+
 import java.net.PasswordAuthentication;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
+
     private DataSource dataSource;
+
 
     private JwtRequestFilter jwtRequestFilter;
 
@@ -32,10 +34,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
+
+
     @Autowired
     public void  configure(AuthenticationManagerBuilder auth) throws Exception{
 
-        auth.jdbcAuthentication().dataSource(dataSource);
+        auth.jdbcAuthentication().dataSource( dataSource);
     }
 
 

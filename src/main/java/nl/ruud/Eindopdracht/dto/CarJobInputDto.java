@@ -12,12 +12,11 @@ import java.time.LocalDateTime;
 
 public class CarJobInputDto {
 
+    private CarJobStatus status;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime repairDate;
-
-    private CarJobStatus status;
 
     private String remarks;
 
