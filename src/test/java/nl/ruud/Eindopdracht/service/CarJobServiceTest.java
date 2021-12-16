@@ -66,7 +66,9 @@ public class CarJobServiceTest {
         carJob.setId(12L);
         Long Id = this.carJob.getId();
 
-
+        Mockito
+                .when(carJobRepository.existsById(Id))
+                .thenReturn(true);
         Mockito
                 .when(carJobRepository.findById(Id))
                 .thenReturn(Optional.of(carJob));

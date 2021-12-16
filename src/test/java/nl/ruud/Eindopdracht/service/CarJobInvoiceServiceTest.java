@@ -57,6 +57,8 @@ public class CarJobInvoiceServiceTest {
 
     @Test
     public void testGetCarJobInvoices(){
+
+    //ARANGE
         CarJobInvoice carJobInvoice = new CarJobInvoice();
         CarJobInvoice carJobInvoice2 = new CarJobInvoice();
 
@@ -67,13 +69,14 @@ public class CarJobInvoiceServiceTest {
         Mockito
                 .doReturn(invoices).when(carJobInvoiceRepository).findAll();
 
+    //ACT/ASSERT
         assertEquals(2, carJobInvoiceService.getInvoices().size());
         assertEquals(carJobInvoice2,carJobInvoiceService.getInvoices().get(1));
 
     }
 
     @Test
-    public void testInvoiceById(){
+    public void testGetInvoiceById(){
         CarJobInvoice carJobInvoice = new CarJobInvoice();
         carJobInvoice.setId(1L);
 
@@ -89,6 +92,7 @@ public class CarJobInvoiceServiceTest {
     @Test
     public void testAddCarJobInvoiceShouldReturnAnInvoice(){
 
+    //ARANGE
         CarJob job = new CarJob();
         Long carJobId = 12L;
         job.setId(carJobId);
@@ -96,9 +100,6 @@ public class CarJobInvoiceServiceTest {
 
         Operation operation = new Operation();
         operation.setDescription("testOperation");
-
-
-
 
         JobOperation jobOperation = new JobOperation();
         jobOperation.setOperation(operation);
@@ -144,9 +145,6 @@ public class CarJobInvoiceServiceTest {
         jobParts.add(jobPart);
         jobParts.add(jobPart2);
 
-
-
-
         Mockito
                 .doReturn(job).when(carJobRepository).findByCustomerNameAndCustomerEmail("jansen","jans@mail" );
         Mockito
@@ -154,10 +152,10 @@ public class CarJobInvoiceServiceTest {
 
         Mockito
                 .doReturn(jobParts).when(jobPartRepository).findAllByCarJobId(carJobId);
-     //   Mockito
-      //          .doReturn(carJobInvoice).when(carJobInvoiceRepository).save(carJobInvoice);
+        //Mockito
+              //  .doReturn(carJobInvoice).when(carJobInvoiceRepository).save(carJobInvoice);
 
-
+    //ACT
        carJobInvoiceService.addCarJobInvoice(null, "jansen", null, "jans@mail", null);
 
 
@@ -167,7 +165,7 @@ public class CarJobInvoiceServiceTest {
         CarJobInvoice carJobInvoice1 = carJobInvoiceCaptor.getValue();
         double expect = (2*25.50)*1.21 + (1*100)*1.21;
 
-
+    //ASSERT
         assertEquals("jansen", carJobInvoice1.getCustomerName() );
         assertEquals(expect, carJobInvoice1.getPartsCharge() );
         assertEquals("testOperation", carJobInvoice1.getOperationDescriptions().get(0));
@@ -266,7 +264,9 @@ public class CarJobInvoiceServiceTest {
         jobParts.add(jobPart2);
 
         double expected = (2*25.50)*1.21 + (2*50)*1.21;      // incl. 21% VAT
-        assertEquals(expected, carJobInvoiceService.calculatePartsCharge(jobParts));
+        double found = carJobInvoiceService.calculatePartsCharge(jobParts);
+
+        assertEquals(expected, found );
     }
 
         @Test
@@ -275,10 +275,11 @@ public class CarJobInvoiceServiceTest {
         carJob.setId(1L);
 
             Mockito
-                    .doReturn(Optional.of(carJob)).when(carJobRepository).findById(1L);
-            Mockito
                     .when(carJobRepository.existsById(1L))
                     .thenReturn(true);
+            Mockito
+                    .doReturn(Optional.of(carJob)).when(carJobRepository).findById(1L);
+
 
           CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  1L, "jansen", null, "null",null);
 
@@ -345,10 +346,11 @@ public class CarJobInvoiceServiceTest {
         carJob.setId(1L);
 
         Mockito
-                .doReturn(Optional.of(carJob)).when(carJobRepository).findById(1L);
-        Mockito
                 .when(carJobRepository.existsById(1L))
                 .thenReturn(true);
+        Mockito
+                .when(carJobRepository.findById(1L))
+                .thenReturn(Optional.of(carJob));
 
         CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  1L, null, null, null,"123AS45");
 

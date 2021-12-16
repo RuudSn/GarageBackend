@@ -101,7 +101,6 @@ public class CarJobService {
     }
 
 
-
     public List<CarJob> getCarJobsByStatus(CarJobStatus status){
         return carJobRepository.findByStatus(status);
     }

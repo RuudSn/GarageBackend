@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import nl.ruud.Eindopdracht.model.CarJob;
 import nl.ruud.Eindopdracht.model.CarJobStatus;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -28,14 +27,14 @@ public class CarJobDto {
 
     private CustomerDto customer;
 
+    @JsonIgnore
     private CarDto car;
 
 
     public CarJobDto() {
     }
 
-    public CarJobDto(Long id,CarJobStatus status, LocalDateTime repairDate, String remarks, CustomerDto customer, CarDto car ) {
-        this.id = id;
+    public CarJobDto(CarJobStatus status, LocalDateTime repairDate, String remarks, CustomerDto customer, CarDto car ) {
         this.status = status;
         this.repairDate = repairDate;
         this.remarks = remarks;
@@ -55,6 +54,8 @@ public class CarJobDto {
         carJobDto.setCar(Dta);
         return carJobDto;
     }
+
+
 
     public CarJobStatus getStatus() {
         return status;

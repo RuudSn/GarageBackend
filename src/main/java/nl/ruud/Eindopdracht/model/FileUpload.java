@@ -21,15 +21,19 @@ public class FileUpload {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "media_type")
+    private String mediaType;
+
     @Column(name = "file")
     @Lob
     private byte[] file;
 
-    @Column(name = "uploaded_timestamp")
-    private Date uploadedTimestamp;
+    @Column(name = "location")
+    private String location;
 
-    @Column(name = "uploaded_by_username")
-    private String uploadedByUsername;
+
+    public FileUpload() {
+    }
 
     public long getId() {
         return id;
@@ -71,32 +75,19 @@ public class FileUpload {
         this.file = file;
     }
 
-    public Date getUploadedTimestamp() {
-        return uploadedTimestamp;
+    public String getLocation() {
+        return location;
     }
 
-    public void setUploadedTimestamp(Date uploadedTimestamp) {
-        this.uploadedTimestamp = uploadedTimestamp;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public String getUploadedByUsername() {
-        return uploadedByUsername;
+    public String getMediaType() {
+        return mediaType;
     }
 
-    public void setUploadedByUsername(String uploadedByUsername) {
-        this.uploadedByUsername = uploadedByUsername;
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

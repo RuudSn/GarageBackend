@@ -1,6 +1,11 @@
 package nl.ruud.Eindopdracht.dto;
 
 import nl.ruud.Eindopdracht.model.Car;
+import nl.ruud.Eindopdracht.model.CarJob;
+import nl.ruud.Eindopdracht.model.Customer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarDto {
 
@@ -12,8 +17,9 @@ public class CarDto {
 
     private String type;
 
+    private CustomerDto customer;
 
-
+    private  List<CarJobShortDto> carJobs;
 
 
     public CarDto() {
@@ -25,6 +31,17 @@ public class CarDto {
         carDto.setId(car.getId());
         carDto.setLicensePlate(car.getLicensePlate());
         carDto.setType(car.getType());
+        carDto.setCustomer(CustomerDto.fromCustomer(car.getCustomer()));
+        List<CarJobShortDto> carJobDtos = new ArrayList<>();
+        List<CarJob> Jobs = car.getCarJobs();
+        for(CarJob carJob : Jobs){
+            CarJobShortDto dto = new CarJobShortDto();
+           dto = dto.fromCarJob(carJob);
+
+            carJobDtos.add(dto);}
+
+        carDto.setCarJobs(carJobDtos);
+
         return carDto;
     }
 
@@ -54,9 +71,21 @@ public class CarDto {
         this.type = type;
     }
 
+    public List<CarJobShortDto> getCarJobs() {
+        return carJobs;
+    }
 
+    public void setCarJobs(List<CarJobShortDto> carJobs) {
+        this.carJobs = carJobs;
+    }
 
+    public CustomerDto getCustomer() {
+        return customer;
+    }
 
+    public void setCustomer(CustomerDto customer) {
+        this.customer = customer;
+    }
 }
 
 

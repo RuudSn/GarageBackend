@@ -78,6 +78,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/parts/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/operations/**").hasRole("ADMIN")
                 .antMatchers("/api/v1/users/**").hasRole("ADMIN")
+                .antMatchers("/api/v1/files/**").hasAnyRole("ADMIN","USER", "RUUD")
                 .and()
                 .csrf().disable()
                 .formLogin().disable()

@@ -1,5 +1,7 @@
 package nl.ruud.Eindopdracht.controller;
 
+import nl.ruud.Eindopdracht.dto.FileUploadDto;
+import nl.ruud.Eindopdracht.dto.FileUploadInputDto;
 import nl.ruud.Eindopdracht.model.FileUpload;
 import nl.ruud.Eindopdracht.service.FileUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,19 +36,19 @@ public class FileUploadController {
         return ResponseEntity.ok().body(files);
     }
 
-
-
-    @GetMapping("/{id}/download")
-    public ResponseEntity downloadFile(@PathVariable long id) {
-        FileUpload fileUpload = fileUploadService.getFileById(id).get();
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileUpload.getFileName() + "\"")
-                .body(fileUpload.getFile());
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getFileInfo(@PathVariable long id) {
+        FileUploadDto response = fileUploadService.getFileById(id);
+        return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("")
-    public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile Dto) {
+
+
+    @PostMapping(value = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+                     produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<Object> uploadFile( FileUploadInputDto Dto) {
+
+
         long newId = fileUploadService.uploadFile(Dto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

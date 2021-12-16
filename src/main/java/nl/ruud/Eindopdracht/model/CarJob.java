@@ -2,10 +2,7 @@ package nl.ruud.Eindopdracht.model;
 
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
@@ -27,7 +24,6 @@ public class CarJob {
     @Enumerated(EnumType.STRING)
     private CarJobStatus status;
 
-    //@JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime repairDate;
 
     private String remarks;
