@@ -11,6 +11,8 @@ public class FileUploadInputDto {
 
     private MultipartFile file;
 
+    private String mediaType;
+
 
 
 
@@ -38,7 +40,11 @@ public class FileUploadInputDto {
         this.file = file;
     }
 
+    public String getMediaType() {
+        return mediaType;
+    }
 
-
-
+    public void setMediaType(String mediaType) {
+        this.mediaType = mediaType;
+    }
 }

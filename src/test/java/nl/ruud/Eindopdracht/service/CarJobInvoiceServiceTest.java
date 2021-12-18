@@ -268,10 +268,19 @@ public class CarJobInvoiceServiceTest {
 
         assertEquals(expected, found );
     }
+    @Test
+    public void testChangeStatus(){
+        CarJob carJob = new CarJob();
+
+        carJobInvoiceService.changeStatus(carJob);
+
+        assertEquals(CarJobStatus.INVOICED, carJob.getStatus());
+
+    }
 
         @Test
         public void testGetCarJobFromOptionalInputCarJobId(){
-        CarJob carJob = new CarJob();Customer customer = new Customer();
+        CarJob carJob = new CarJob();
         carJob.setId(1L);
 
             Mockito
@@ -356,6 +365,8 @@ public class CarJobInvoiceServiceTest {
 
         assertEquals(carJob ,found);
     }
+
+
     @Test
     public void testRemoveCarJobInvoiceById() {
         CarJobInvoice carJobInvoice = new CarJobInvoice();
@@ -369,6 +380,7 @@ public class CarJobInvoiceServiceTest {
         Mockito.verify(carJobInvoiceRepository, Mockito.times(1)).deleteById(1L);
 
     }
+
 
 
 }

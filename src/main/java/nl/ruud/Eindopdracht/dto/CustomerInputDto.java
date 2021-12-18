@@ -2,14 +2,19 @@ package nl.ruud.Eindopdracht.dto;
 
 import nl.ruud.Eindopdracht.model.Customer;
 
+import javax.validation.constraints.Email;
+
 public class CustomerInputDto {
 
 
     private String name;
 
+    @Email(message = "use a valid Email-adress")
     private String email;
 
     private String telephone;
+
+
 
     public CustomerInputDto() {
     }

@@ -64,7 +64,6 @@ public class FileUploadService {
 
     public long uploadFile(FileUploadInputDto Dto) {
 
-
         MultipartFile file = Dto.getFile();
         String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
         Path copyLocation = this.uploads.resolve(file.getOriginalFilename());
@@ -74,8 +73,8 @@ public class FileUploadService {
         newFile.setFileName(originalFilename);
         newFile.setTitle(Dto.getTitle());
         newFile.setDescription(Dto.getDescription());
+        newFile.setMediaType(Dto.getMediaType());
         newFile.setLocation(copyLocation.toString());
-
 
         FileUpload storedFile = fileUploadRepository.save(newFile);
 

@@ -84,19 +84,9 @@ public class CustomerController {
         customerService.removeCustomerById(id);
         return ResponseEntity.noContent().build().ok("Deleted");
     }
-/*
-    @GetMapping("/{status}")
-    public ResponseEntity<Object> getCustomersByStatus(@RequestParam CarJobStatus status){
-        List<Customer> customers = customerService.getCustomersByStatus(status);
-        List<CustomerDto> statusCustomersDto = new ArrayList<>();
-        for (Customer customer : customers) {
-            CustomerDto customerDto = new CustomerDto();
-            customerDto = CustomerDto.fromCustomer(customer);
-            statusCustomersDto.add(customerDto); }
-        return ResponseEntity.ok().body(statusCustomersDto);
-    }
+
     
- */
+
 
 
 

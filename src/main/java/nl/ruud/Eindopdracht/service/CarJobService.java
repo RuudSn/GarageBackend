@@ -37,7 +37,7 @@ public class CarJobService {
     public CarJob getCarJobById(long id) {
         if (carJobRepository.existsById(id)) {
             return carJobRepository.findById(id).get();}
-        else { throw new RecordNotFoundException();}
+        else { throw new RecordNotFoundException("Unknown Id");}
     }
 
 
@@ -87,11 +87,10 @@ public class CarJobService {
         for (String key : fields.keySet()){
             switch(key.toLowerCase()){
                 case "status":
-                                                                            //    if (  fields.get(key) instanceof CarJobStatus){
-                    carJob.setStatus((CarJobStatus) fields.get(key) );      //}
+                    carJob.setStatus((CarJobStatus) fields.get(key) );
                     break;
                 case "repairdate" :                                        //if(fields.get(key)instanceof LocalDateTime){
-                    carJob.setRepairDate((LocalDateTime) fields.get(key));     //}
+                    carJob.setRepairDate((LocalDateTime) fields.get(key));
                     break;
                 case "remarks" : carJob.setRemarks((String) fields.get(key));
                     break;

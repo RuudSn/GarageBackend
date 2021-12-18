@@ -46,11 +46,12 @@ public class JobOperationService {
     }
 
 
-    public JobOperationID addJobOperation(Long carJobId, Long operationId, JobOperation jobOperation){
+    public JobOperationID addJobOperation(Long carJobId, Long operationId){
         if(!carJobRepository.existsById(carJobId)){throw new RecordNotFoundException();}
         CarJob carJob = carJobRepository.findById(carJobId).get();
         if(!operationRepository.existsById(operationId)){throw  new RecordNotFoundException();}
         Operation operation = operationRepository.findById(operationId).get();
+        JobOperation jobOperation = new JobOperation();
         jobOperation.setCarJob(carJob);
         jobOperation.setOperation(operation);
         JobOperationID ID= new JobOperationID(carJobId, operationId);
@@ -69,11 +70,14 @@ public class JobOperationService {
             throw new RecordNotFoundException(); }
     }
 
-    public void updateJobOperation(Long carJobId, Long operationId, JobOperation jobOperation) {
+    public void updateJobOperation(Long carJobId, Long operationId) {
         JobOperationID ID = new JobOperationID(carJobId, operationId);
         if(jobOperationRepository.existsById(ID)){
             JobOperation existingJobOperation = jobOperationRepository.findById(ID).get();
-            //existingJobOperation.setQuantity(jobOperation.getQuantity());
+            CarJob carJob = carJobRepository.findById(carJobId).get();
+            Operation operation = operationRepository.findById(operationId).get();
+            existingJobOperation.setCarJob(carJob);
+            existingJobOperation.setOperation(operation);
             jobOperationRepository.save(existingJobOperation); }
         else { throw new RecordNotFoundException(); }
     }

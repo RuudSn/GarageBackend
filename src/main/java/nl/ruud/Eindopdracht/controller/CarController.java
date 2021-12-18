@@ -2,6 +2,7 @@ package nl.ruud.Eindopdracht.controller;
 
 import nl.ruud.Eindopdracht.dto.CarDto;
 import nl.ruud.Eindopdracht.dto.CarInputDto;
+import nl.ruud.Eindopdracht.dto.CarJobInputDto;
 import nl.ruud.Eindopdracht.dto.CustomerDto;
 import nl.ruud.Eindopdracht.model.Car;
 import nl.ruud.Eindopdracht.model.Customer;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -65,10 +67,19 @@ public class CarController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Object> partialUpdate(@PathVariable("id") long id, @RequestBody Map<String, String> fields) {
+    public ResponseEntity<Object> partialUpdate(@PathVariable("id") long id, @RequestBody CarInputDto dto) {
+        Map<String, Object> fields = new HashMap<>();
+        var stat =dto.getType();
+        fields.put("type", stat);
+        var stet = dto.getLicensePlate();
+        fields.put("licensePlate", stet);
+        var stot = dto.getCustomerId();
+        fields.put("CustomerId", stot);
       carService.partialUpdateCar(id, fields);
-      return ResponseEntity.noContent().build();
+      return ResponseEntity.noContent().build().ok("updated");
     }
+
+
 
 
     @PutMapping("/{id}")

@@ -66,16 +66,18 @@ public class CarService {
         return addedCar.getId();
         }
 
-        public void partialUpdateCar(long id, Map<String, String> fields) {
+        public void partialUpdateCar(long id, Map<String, Object> fields) {
             if(carRepository.existsById(id)){
                 Car car = carRepository.findById(id).get();
                 for (String field : fields.keySet()) {
                     switch (field.toLowerCase()){
-                        case "licensePlate" : car.setLicensePlate((String) fields.get(field));
+                        case "licenseplate" : car.setLicensePlate((String) fields.get(field));
                             break;
                         case "type" : car.setType((String) fields.get(field));
-                            break; }
-                }
+                            break;
+                        case "customerid" : car.setCustomer(customerRepository.findById((Long) fields.get(field)).get());
+                        break;
+                }}
                 carRepository.save(car);
             } else {
                 throw new RecordNotFoundException("Unknown ID"); }

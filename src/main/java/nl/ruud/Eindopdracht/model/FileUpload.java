@@ -24,9 +24,6 @@ public class FileUpload {
     @Column(name = "media_type")
     private String mediaType;
 
-    @Column(name = "file")
-    @Lob
-    private byte[] file;
 
     @Column(name = "location")
     private String location;
@@ -67,13 +64,6 @@ public class FileUpload {
         this.description = description;
     }
 
-    public byte[] getFile() {
-        return file;
-    }
-
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
 
     public String getLocation() {
         return location;

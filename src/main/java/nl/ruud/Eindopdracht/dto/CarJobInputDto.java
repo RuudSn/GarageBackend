@@ -7,10 +7,13 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import nl.ruud.Eindopdracht.model.CarJob;
 import nl.ruud.Eindopdracht.model.CarJobStatus;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 
 public class CarJobInputDto {
+
 
     private CarJobStatus status;
 
@@ -18,7 +21,9 @@ public class CarJobInputDto {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime repairDate;
 
+    @Max(value = 250, message = "remarks should not be greater than 250")
     private String remarks;
+
 
     private Long customerId;
 

@@ -89,6 +89,8 @@ public class CarJobInvoiceService {
             carJobInvoice.setPartsCharge(partsCharge);
             carJobInvoice.setTotalCharge(totalCharge);
 
+            changeStatus(carJob);
+
 
             carJobInvoiceRepository.save(carJobInvoice);
 
@@ -172,6 +174,9 @@ public class CarJobInvoiceService {
         return partsWithVAT;
     }
 
+    public void changeStatus(CarJob carJob){
+        carJob.setStatus(CarJobStatus.INVOICED);
+    }
 
 
     public void removeCarJobInvoiceById(long id) {

@@ -11,14 +11,14 @@ public class JobOperation {
     @EmbeddedId
     private JobOperationID ID;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("operationId")
     @JoinColumn(name = "operation_id")
     @JsonIgnore
     private Operation operation;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("carJobId")
     @JoinColumn(name = "carjob_id")
     @JsonIgnore

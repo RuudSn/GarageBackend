@@ -24,7 +24,6 @@ public class Car {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private Customer customer;
 
     @OneToMany(mappedBy = "car")

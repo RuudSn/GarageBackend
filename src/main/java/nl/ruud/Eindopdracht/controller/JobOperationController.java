@@ -25,9 +25,8 @@ public class JobOperationController {
 
     @PostMapping("/{carjob_id}/{operation_id}")
     public ResponseEntity<Object> addJobOperation(@PathVariable("carjob_id")Long carJobId,
-                                             @PathVariable("operation_id")Long operationId,
-                                             @RequestBody JobOperation quantity) {
-        JobOperationID ID = jobOperationService.addJobOperation(carJobId, operationId, quantity);
+                                             @PathVariable("operation_id")Long operationId) {
+        JobOperationID ID = jobOperationService.addJobOperation(carJobId, operationId);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
 
@@ -58,9 +57,8 @@ public class JobOperationController {
 
     @PutMapping("/{carjob_id}/{operation_id}")
     public ResponseEntity<Object> updateJobOperation(@PathVariable("carjob_id") Long carJobId,
-                                                @PathVariable("operation_id") Long operationId,
-                                                @RequestBody JobOperation quantity) {
-        jobOperationService.updateJobOperation(carJobId, operationId, quantity);
+                                                @PathVariable("operation_id") Long operationId) {
+        jobOperationService.updateJobOperation(carJobId, operationId);
         return ResponseEntity.noContent().build().ok("Updated");
     }
 

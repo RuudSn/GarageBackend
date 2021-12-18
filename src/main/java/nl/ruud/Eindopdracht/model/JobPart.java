@@ -12,14 +12,14 @@ public class JobPart {
     @EmbeddedId
     private JobPartID ID;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("partId")
     @JoinColumn(name = "part_id")
     @JsonIgnore
     private Part part;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("carJobId")
     @JoinColumn(name = "carjob_id")
     @JsonIgnore

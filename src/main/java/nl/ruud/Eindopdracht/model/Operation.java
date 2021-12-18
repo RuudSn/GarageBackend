@@ -1,5 +1,8 @@
 package nl.ruud.Eindopdracht.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,7 +20,8 @@ public class Operation {
     private double price;
 
 
-    @OneToMany(mappedBy = "operation")
+    @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<JobOperation> operations;
 
 

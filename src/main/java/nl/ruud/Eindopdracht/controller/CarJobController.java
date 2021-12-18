@@ -59,9 +59,7 @@ public class CarJobController {
         }
 
 
-
-
-        @GetMapping("/{status}")
+        @GetMapping("/status")
         public ResponseEntity<Object> getByStatus(@RequestParam CarJobStatus status){
             List<CarJob> carJobs = carJobService.getCarJobsByStatus(status);
             List<CarJobDto> carJobsDto = new ArrayList<>();
@@ -71,8 +69,6 @@ public class CarJobController {
                 carJobsDto.add(carJobDto); }
             return ResponseEntity.ok().body(carJobsDto);
         }
-
-
 
 
 
@@ -99,15 +95,6 @@ public class CarJobController {
               carJobService.updateCarJob(id, carJob);
               return ResponseEntity.noContent().build().ok("Updated");
           }
-/*
-        @PatchMapping("/{id}")
-        public ResponseEntity<Object> partialUpdate(@PathVariable("id") long id, @RequestBody CarJobInputDto dto){
-        CarJob carJob = dto.toCarJob(dto);
-        carJobService.partialUpdateCarJob(id, carJob);
-        return ResponseEntity.noContent().build().ok("Updated");
-    }
-
- */
 
 
 

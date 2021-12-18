@@ -22,7 +22,7 @@ public class Part {
     private Long quantity;
 
 
-    @OneToMany(mappedBy = "part")
+    @OneToMany(mappedBy = "part", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<JobPart> parts;
 

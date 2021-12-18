@@ -19,8 +19,7 @@ public class CarJob {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column
+
     @Enumerated(EnumType.STRING)
     private CarJobStatus status;
 
@@ -28,13 +27,13 @@ public class CarJob {
 
     private String remarks;
 
-    @OneToMany(mappedBy = "carJob", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "carJob", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<JobOperation> operations;
 
-    @OneToMany(mappedBy = "carJob", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "carJob", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<JobPart> parts;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

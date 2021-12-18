@@ -43,7 +43,7 @@ import java.util.Optional;
             Customer customer = customerRepository.findById(id).get();
             return customer;
         } else {
-            throw new RecordNotFoundException(); }
+            throw new RecordNotFoundException("Unknown customerId"); }
     }
 
     public Customer getCustomerByName(String name) {
@@ -59,6 +59,7 @@ import java.util.Optional;
     public long addCustomer(Customer customer) {
         Customer addedCustomer = customerRepository.save(customer);
         return addedCustomer.getId();
+
     }
 
 
@@ -79,20 +80,6 @@ import java.util.Optional;
                 throw new RecordNotFoundException();
             }
         }
-
-
-
-        public List<Customer> getCustomersByStatus(CarJobStatus status){
-            List<CarJob> carJobs = carJobRepository.findByStatus(status);
-            List<Customer> customers = new ArrayList<>();
-            for(CarJob job : carJobs){
-                Customer customer = job.getCustomer();
-                customers.add(customer); }
-            return customers;
-        }
-
-
-
 
 
 
