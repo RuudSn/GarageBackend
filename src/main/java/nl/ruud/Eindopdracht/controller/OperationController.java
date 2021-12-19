@@ -1,8 +1,6 @@
 package nl.ruud.Eindopdracht.controller;
 
 import nl.ruud.Eindopdracht.model.Operation;
-import nl.ruud.Eindopdracht.model.Part;
-import nl.ruud.Eindopdracht.service.JobOperationService;
 import nl.ruud.Eindopdracht.service.OperationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

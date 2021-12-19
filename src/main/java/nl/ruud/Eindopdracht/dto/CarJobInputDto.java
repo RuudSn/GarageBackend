@@ -21,7 +21,7 @@ public class CarJobInputDto {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime repairDate;
 
-    @Max(value = 250, message = "remarks should not be greater than 250")
+    @Max(value = 255, message = "remarks should not be greater than 250")
     private String remarks;
 
 

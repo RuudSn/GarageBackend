@@ -2,7 +2,6 @@ package nl.ruud.Eindopdracht.dto;
 
 import nl.ruud.Eindopdracht.model.Car;
 import nl.ruud.Eindopdracht.model.CarJob;
-import nl.ruud.Eindopdracht.model.Customer;
 
 import java.util.ArrayList;
 import java.util.List;

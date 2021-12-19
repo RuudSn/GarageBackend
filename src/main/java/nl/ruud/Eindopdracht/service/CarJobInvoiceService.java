@@ -50,7 +50,7 @@ public class CarJobInvoiceService {
    }
 
 
-    // verzamelen info, berekenen totaalbedragen incl. btw  en genereren factuur
+    // Ophalen juiste carjob, daaruit verzamelen info, berekenen totaalbedragen incl. btw  en genereren factuur.
 
     public Long addCarJobInvoice(Long carJobId, String name, String telephone, String email, String licensePlate) {
 
@@ -101,8 +101,8 @@ public class CarJobInvoiceService {
 
 
 
-        // ophalen van juiste carjob voor invoice aan hand van opgave aan balie van ofwel: carjobID, klantnaam+telfoonnr,
-      // klantnaam+email, of kenteken.    wellicht onnodig ?  evt. makkelijk te verwijderen
+        // Ophalen van juiste carjob voor invoice aan hand van opgave aan balie van ofwel: carjobID, klantnaam+telfoonnr,
+      // klantnaam+email, of kenteken.    wellicht onnodig ? (evt. makkelijk te verwijderen)
 
     public CarJob getCarJobFromOptionalInput(Long carJobId, String name, String telephone, String email, String licensePlate){
         CarJob carJob = new CarJob();

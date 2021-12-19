@@ -15,9 +15,13 @@ public class Customer {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     private String email;
+
     private String telephone;
+
 
     @OneToMany(mappedBy = "customer")
     private List<CarJob> carJob;
@@ -26,17 +30,11 @@ public class Customer {
     private List<Car> car;
 
 
+
     public Customer() {
     }
 
     public Customer(String name,String email, String telephone) {
-        this.name = name;
-        this.email = email;
-        this.telephone = telephone;
-    }
-
-    public Customer(Long id,String name, String email, String telephone) {
-        this.id = id;
         this.name = name;
         this.email = email;
         this.telephone = telephone;

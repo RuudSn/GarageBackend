@@ -2,8 +2,6 @@ package nl.ruud.Eindopdracht.controller;
 
 import nl.ruud.Eindopdracht.dto.CarDto;
 import nl.ruud.Eindopdracht.dto.CarInputDto;
-import nl.ruud.Eindopdracht.dto.CarJobInputDto;
-import nl.ruud.Eindopdracht.dto.CustomerDto;
 import nl.ruud.Eindopdracht.model.Car;
 import nl.ruud.Eindopdracht.model.Customer;
 import nl.ruud.Eindopdracht.service.CarService;

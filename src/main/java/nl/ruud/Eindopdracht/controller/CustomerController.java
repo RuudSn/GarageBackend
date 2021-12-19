@@ -2,7 +2,6 @@ package nl.ruud.Eindopdracht.controller;
 
 import nl.ruud.Eindopdracht.dto.CustomerDto;
 import nl.ruud.Eindopdracht.dto.CustomerInputDto;
-import nl.ruud.Eindopdracht.model.CarJobStatus;
 import nl.ruud.Eindopdracht.model.Customer;
 import nl.ruud.Eindopdracht.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;

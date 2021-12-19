@@ -1,10 +1,5 @@
 package nl.ruud.Eindopdracht.model;
 
-
-
-import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.security.Timestamp;

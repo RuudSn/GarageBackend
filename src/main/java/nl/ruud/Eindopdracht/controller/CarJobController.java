@@ -26,9 +26,13 @@ import java.util.Map;
 public class CarJobController {
 
         private CarJobService carJobService;
+
         private CustomerService customerService;
+
         private CarService carService;
+
         private JobPartService jobPartService;
+
         private JobOperationService jobOperationService;
 
 

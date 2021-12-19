@@ -31,9 +31,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+
     public Optional<User> getUser(String username) {
         return userRepository.findById(username);
     }
+
 
 
     public String createUser(User user) {
@@ -60,7 +62,7 @@ public class UserService {
             user.setEmail(newUser.getEmail());
             user.setEnabled(newUser.isEnabled());
             userRepository.save(user);
-        }else{throw new RecordNotFoundException();}
+        }else{throw new UserNotFoundException();}
         }
 
 
@@ -68,7 +70,7 @@ public class UserService {
             if(userRepository.existsById(username)){
                 User user = userRepository.findById(username).get();
                 return user.getAuthorities();
-            }else{throw new RecordNotFoundException();}
+            }else{throw new UserNotFoundException();}
         }
 
 
@@ -80,7 +82,7 @@ public class UserService {
             user.addAuthority(authority);
             userRepository.save(user);
         } else {
-            throw new RecordNotFoundException(); }
+            throw new UserNotFoundException(); }
     }
 
 
@@ -90,7 +92,7 @@ public class UserService {
             user.removeAuthority(authority);
             userRepository.save(user);
         } else {
-            throw new RecordNotFoundException(); }
+            throw new UserNotFoundException(); }
     }
 
 

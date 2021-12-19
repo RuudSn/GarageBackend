@@ -61,24 +61,7 @@ public class CarJobService {
             carJobRepository.save(existingCarJob);
         }else { throw new RecordNotFoundException();}
     }
-/*
-    public void partialUpdateCarJob(long id, CarJob carJob){
-        if(carJobRepository.existsById(id)){
-        CarJob existingJob = carJobRepository.findById(id).get();
-        if(carJob.getStatus()!= null) {
-            existingJob.setStatus(carJob.getStatus());
-        }
-        if(carJob.getRepairDate()!=null){
-            existingJob.setRepairDate(carJob.getRepairDate());
-        }
-        if(carJob.getRemarks()!=null){
-            existingJob.setRemarks(carJob.getRemarks());
-        }
-        carJobRepository.save(existingJob);
-        }else {throw new RecordNotFoundException();}
-    }
 
- */
 
 
    public void partialUpdateCarJob(long id, Map<String, Object> fields){
@@ -103,6 +86,7 @@ public class CarJobService {
     public List<CarJob> getCarJobsByStatus(CarJobStatus status){
         return carJobRepository.findByStatus(status);
     }
+
 
     public void deleteCarJobById(long id){
         if(carJobRepository.existsById(id)){

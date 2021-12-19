@@ -32,10 +32,6 @@ public class FileUploadService {
     }
 
 
-    public boolean fileExistsById(long id) {
-        return fileUploadRepository.existsById(id);
-    }
-
 
     public Iterable<FileUpload> getFiles() {
         return fileUploadRepository.findAll();
@@ -62,18 +58,15 @@ public class FileUploadService {
     }
 
 
-    public long uploadFile(FileUploadInputDto Dto) {
+    public long uploadFile(FileUploadInputDto dto) {
 
-        MultipartFile file = Dto.getFile();
+        MultipartFile file = dto.getFile();
         String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
         Path copyLocation = this.uploads.resolve(file.getOriginalFilename());
 
 
         FileUpload newFile = new FileUpload();
-        newFile.setFileName(originalFilename);
-        newFile.setTitle(Dto.getTitle());
-        newFile.setDescription(Dto.getDescription());
-        newFile.setMediaType(Dto.getMediaType());
+        newFile = dto.toFileUpload(dto);
         newFile.setLocation(copyLocation.toString());
 
         FileUpload storedFile = fileUploadRepository.save(newFile);
@@ -85,6 +78,7 @@ public class FileUploadService {
         if (!fileUploadRepository.existsById(id)) throw new RecordNotFoundException();
         fileUploadRepository.deleteById(id);
     }
+
 
 
 

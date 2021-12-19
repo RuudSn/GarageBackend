@@ -1,5 +1,7 @@
 package nl.ruud.Eindopdracht.controller;
 
+import nl.ruud.Eindopdracht.dto.JobPartDto;
+import nl.ruud.Eindopdracht.dto.JobPartInputDto;
 import nl.ruud.Eindopdracht.model.JobPart;
 import nl.ruud.Eindopdracht.model.JobPartID;
 import nl.ruud.Eindopdracht.service.JobPartService;
@@ -9,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/jobparts")
 public class JobPartController {
@@ -27,7 +34,10 @@ public class JobPartController {
     @PostMapping("/{carjob_id}/{part_id}")
     public ResponseEntity<Object> addJobPart(@PathVariable("carjob_id")Long carJobId,
                                              @PathVariable("part_id")Long partId,
-                                             @RequestBody JobPart quantity) {
+                                             @RequestBody JobPartInputDto dto) {
+
+        double quantity = dto.getQuantity();
+
         JobPartID ID = jobPartService.addJobPart(carJobId, partId, quantity);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
@@ -38,17 +48,32 @@ public class JobPartController {
     @GetMapping("/{carjob_id}/{part_id}")
     public ResponseEntity<Object> getJobPart(@PathVariable("carjob_id") Long carJobId,
                                              @PathVariable("part_id") Long partId){
-        return ResponseEntity.ok().body(jobPartService.getJobPartById(carJobId, partId));
+        JobPart jobPart = jobPartService.getJobPartById(carJobId, partId);
+        JobPartDto Dto =  new JobPartDto();
+        Dto = Dto.fromJobPart(jobPart);
+        return ResponseEntity.ok().body(Dto);
     }
 
     @GetMapping("/{part_id}/jobs")
-    public ResponseEntity<Object> getJobPartsByPartId(@PathVariable("part_id") Long id){
-        return ResponseEntity.ok().body(jobPartService.getJobPartsByPartId(id));
+    public ResponseEntity<Object> getJobPartsByPartId(@PathVariable("part_id") Long partId){
+        Collection<JobPart> jobParts =  jobPartService.getJobPartsByPartId(partId);
+        List<JobPartDto> Dtos= new ArrayList<>();
+        for(JobPart jobPart : jobParts){
+            JobPartDto dto= JobPartDto.fromJobPart(jobPart);
+            Dtos.add(dto);
+        }
+        return ResponseEntity.ok().body(Dtos);
     }
 
     @GetMapping("/{carjob_id}/parts")
     public ResponseEntity<Object> getJobPartsByCarJobId (@PathVariable("carjob_id") Long carJobId){
-        return ResponseEntity.ok().body(jobPartService.getJobPartsByCarJobId(carJobId));
+        Collection<JobPart> jobParts =  jobPartService.getJobPartsByCarJobId(carJobId);
+        List<JobPartDto> Dtos  = new ArrayList<>();
+        for(JobPart jobPart : jobParts){
+            JobPartDto dto= JobPartDto.fromJobPart(jobPart);
+            Dtos.add(dto);
+        }
+        return ResponseEntity.ok().body(Dtos);
     }
 
 
@@ -62,7 +87,8 @@ public class JobPartController {
     @PutMapping("/{carjob_id}/{part_id}")
     public ResponseEntity<Object> updateJobPart(@PathVariable("carjob_id") Long carJobId,
                                                 @PathVariable("part_id") Long partId,
-                                                @RequestBody JobPart quantity) {
+                                                @RequestBody JobPartInputDto dto) {
+        double quantity = dto.getQuantity();
         jobPartService.updateJobPart(carJobId, partId, quantity);
         return ResponseEntity.noContent().build().ok("Updated");
     }

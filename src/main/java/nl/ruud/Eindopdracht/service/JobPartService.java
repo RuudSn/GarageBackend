@@ -53,7 +53,8 @@ public class JobPartService {
     }
 
 
-    public JobPartID addJobPart(Long carJobId, Long partId, JobPart jobPart){
+    public JobPartID addJobPart(Long carJobId, Long partId, double quantity){
+        JobPart jobPart = new JobPart();
         if(!carJobRepository.existsById(carJobId)){throw new RecordNotFoundException();}
         CarJob carJob = carJobRepository.findById(carJobId).get();
         if(!partRepository.existsById(partId)){throw  new RecordNotFoundException();}
@@ -62,6 +63,7 @@ public class JobPartService {
         jobPart.setPart(part);
         JobPartID ID= new JobPartID(carJobId, partId);
         jobPart.setID(ID);
+        jobPart.setQuantity(quantity);
         jobPartRepository.save(jobPart);
         return ID;
     }
@@ -75,11 +77,11 @@ public class JobPartService {
             throw new RecordNotFoundException(); }
     }
 
-    public void updateJobPart(Long carJobId, Long partId, JobPart jobPart) {
+    public void updateJobPart(Long carJobId, Long partId, double quantity) {
         JobPartID ID = new JobPartID(carJobId, partId);
         if(jobPartRepository.existsById(ID)){
             JobPart existingJobPart = jobPartRepository.findById(ID).get();
-            existingJobPart.setQuantity(jobPart.getQuantity());
+            existingJobPart.setQuantity(quantity);
             jobPartRepository.save(existingJobPart); }
         else { throw new RecordNotFoundException(); }
     }
