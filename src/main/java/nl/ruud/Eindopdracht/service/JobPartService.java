@@ -11,6 +11,7 @@ import nl.ruud.Eindopdracht.repository.PartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class JobPartService {
     }
 
 
-    public JobPartID addJobPart(Long carJobId, Long partId, double quantity){
+    public JobPartID addJobPart(Long carJobId, Long partId, BigDecimal quantity){
         JobPart jobPart = new JobPart();
         if(!carJobRepository.existsById(carJobId)){throw new RecordNotFoundException();}
         CarJob carJob = carJobRepository.findById(carJobId).get();
@@ -77,7 +78,7 @@ public class JobPartService {
             throw new RecordNotFoundException(); }
     }
 
-    public void updateJobPart(Long carJobId, Long partId, double quantity) {
+    public void updateJobPart(Long carJobId, Long partId, BigDecimal quantity) {
         JobPartID ID = new JobPartID(carJobId, partId);
         if(jobPartRepository.existsById(ID)){
             JobPart existingJobPart = jobPartRepository.findById(ID).get();

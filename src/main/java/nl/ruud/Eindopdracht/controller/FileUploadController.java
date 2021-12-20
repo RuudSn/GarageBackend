@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -33,13 +35,18 @@ public class FileUploadController {
     @GetMapping("")
     public ResponseEntity<Object> getFiles() {
         Iterable<FileUpload> files = fileUploadService.getFiles();
-        return ResponseEntity.ok().body(files);
+        List<FileUploadDto> Dtos = new ArrayList<>();
+        for(FileUpload fileUpload : files){
+            FileUploadDto fileUploadDto  = FileUploadDto.fromFileUpload(fileUpload);
+            Dtos.add(fileUploadDto);
+        }
+        return ResponseEntity.ok().body(Dtos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getFileInfo(@PathVariable long id) {
-        FileUploadDto response = fileUploadService.getFileById(id);
-        return ResponseEntity.ok().body(response);
+        FileUploadDto Dto = fileUploadService.getFileById(id);
+        return ResponseEntity.ok().body(Dto);
     }
 
 

@@ -17,7 +17,7 @@ public class Part {
 
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
     private Long quantity;
 
@@ -31,7 +31,7 @@ public class Part {
     public Part() {
     }
 
-    public Part( String description, double price, Long quantity, List<JobPart> parts) {
+    public Part( String description, BigDecimal price, Long quantity, List<JobPart> parts) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
@@ -54,11 +54,11 @@ public class Part {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

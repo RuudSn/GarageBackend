@@ -17,6 +17,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
@@ -110,10 +112,10 @@ public class CarJobInvoiceServiceTest {
 
         Part part = new Part();
         part.setDescription("testPart1");
-        part.setPrice(100.00);
+        part.setPrice(BigDecimal.valueOf(100.00));
 
         Part part2 = new Part();
-        part2.setPrice(25.50);
+        part2.setPrice(BigDecimal.valueOf(25.50));
         part2.setDescription("testPart2");
 
 
@@ -134,12 +136,12 @@ public class CarJobInvoiceServiceTest {
         JobPart jobPart = new JobPart();
         jobPart.setCarJob(job);
         jobPart.setPart(part);
-        jobPart.setQuantity(1L);
+        jobPart.setQuantity(BigDecimal.valueOf(1));
 
         JobPart jobPart2 =new JobPart();
         jobPart2.setCarJob(job);
         jobPart2.setPart(part2);
-        jobPart2.setQuantity(2L);
+        jobPart2.setQuantity(BigDecimal.valueOf(1));
 
         List<JobPart> jobParts = new ArrayList<>();
         jobParts.add(jobPart);
@@ -230,7 +232,7 @@ public class CarJobInvoiceServiceTest {
         CarJob job = new CarJob();
 
         Operation operation = new Operation();
-        operation.setPrice(50.50);
+        operation.setPrice(BigDecimal.valueOf(50.50));
 
         JobOperation jobOperation = new JobOperation();
         jobOperation.setOperation(operation);
@@ -238,34 +240,37 @@ public class CarJobInvoiceServiceTest {
         List<JobOperation> jobOperations = new ArrayList<>();
         jobOperations.add(jobOperation);
         
-        double expect = 50.50 * 1.21;               // incl 21% VAT
-        assertEquals(expect, carJobInvoiceService.calculateOperationsCharge(jobOperations));
+        BigDecimal expect = BigDecimal.valueOf(50.50 * 1.21);
+        BigDecimal var =  carJobInvoiceService.calculateOperationsCharge(jobOperations);    // incl 21% VAT
+        BigDecimal found = var.setScale(3, RoundingMode.HALF_EVEN);
+        assertEquals(expect, found);
     }
 
     @Test
     public void testCalculatePartsCharge(){
 
         Part part = new Part();
-        part.setPrice(50.00);
+        part.setPrice(BigDecimal.valueOf(50.00));
 
         Part part2 = new Part();
-        part2.setPrice(25.50);
+        part2.setPrice(BigDecimal.valueOf(25.50));
 
         JobPart jobPart = new JobPart();
         jobPart.setPart(part);
-        jobPart.setQuantity(2L);
+        jobPart.setQuantity(BigDecimal.valueOf(2));
 
         JobPart jobPart2 =new JobPart();
         jobPart2.setPart(part2);
-        jobPart2.setQuantity(2L);
+        jobPart2.setQuantity(BigDecimal.valueOf(2));
 
         List<JobPart> jobParts = new ArrayList<>();
         jobParts.add(jobPart);
         jobParts.add(jobPart2);
 
-        double expected = (2*25.50)*1.21 + (2*50)*1.21;      // incl. 21% VAT
-        double found = carJobInvoiceService.calculatePartsCharge(jobParts);
+        BigDecimal expected = BigDecimal.valueOf(2*50.00 + 2*25.50).multiply(BigDecimal.valueOf(1.21));
+        BigDecimal var = carJobInvoiceService.calculatePartsCharge(jobParts);
 
+        BigDecimal found = var.setScale(3, RoundingMode.HALF_EVEN);
         assertEquals(expected, found );
     }
     @Test

@@ -24,14 +24,14 @@ public class CarJobInvoice {
     @ElementCollection
     private List<String> operationDescriptions;
 
-    private double operationsCharge;
+    private BigDecimal operationsCharge;
 
     @ElementCollection
     private List<String> partDescriptions;
 
-    private double partsCharge;
+    private BigDecimal partsCharge;
 
-    private double totalCharge;
+    private BigDecimal totalCharge;
 
 
     public CarJobInvoice() {
@@ -40,8 +40,8 @@ public class CarJobInvoice {
 
 
     public CarJobInvoice( String customerName, String remarks, List<String> operationDescriptions,
-                         double operationsCharge,List<String> partDescriptions,
-                                                            double partsCharge, double totalCharge) {
+                         BigDecimal operationsCharge,List<String> partDescriptions,
+                                                            BigDecimal partsCharge, BigDecimal totalCharge) {
         this.customerName = customerName;
         this.remarks = remarks;
         this.operationDescriptions = operationDescriptions;
@@ -76,11 +76,11 @@ public class CarJobInvoice {
         this.remarks = remarks;
     }
 
-    public double getOperationsCharge() {
+    public BigDecimal getOperationsCharge() {
         return operationsCharge;
     }
 
-    public void setOperationsCharge(double operationsCharge) {
+    public void setOperationsCharge(BigDecimal operationsCharge) {
         this.operationsCharge = operationsCharge;
     }
 
@@ -92,20 +92,20 @@ public class CarJobInvoice {
         this.partDescriptions = partDescriptions;
     }
 
-    public double getPartsCharge() {
+    public BigDecimal getPartsCharge() {
         return partsCharge;
     }
 
-    public void setPartsCharge(double partsCharge) {
-        this.partsCharge = partsCharge;
-    }
-
-    public double getTotalCharge() {
+    public BigDecimal getTotalCharge() {
         return totalCharge;
     }
 
-    public void setTotalCharge(double totalCharge) {
+    public void setTotalCharge(BigDecimal totalCharge) {
         this.totalCharge = totalCharge;
+    }
+
+    public void setPartsCharge(BigDecimal partsCharge) {
+        this.partsCharge = partsCharge;
     }
 
     public Long getId() {

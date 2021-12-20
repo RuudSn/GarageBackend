@@ -1,5 +1,6 @@
 package nl.ruud.Eindopdracht.dto;
 
+import nl.ruud.Eindopdracht.model.FileUpload;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadDto {
@@ -17,6 +18,17 @@ public class FileUploadDto {
 
     public FileUploadDto() {
     }
+
+    public static FileUploadDto fromFileUpload(FileUpload fileUpload){
+        FileUploadDto Dto = new FileUploadDto();
+        Dto.setTitle(fileUpload.getTitle());
+        Dto.setDescription(fileUpload.getDescription());
+        Dto.setFileName(fileUpload.getFileName());
+        Dto.setMediaType(fileUpload.getMediaType());
+        Dto.setMediaType(fileUpload.getMediaType());
+        return Dto;
+    }
+
 
     public String getTitle() {
         return title;

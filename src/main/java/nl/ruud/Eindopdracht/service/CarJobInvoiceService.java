@@ -7,6 +7,7 @@ import nl.ruud.Eindopdracht.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Service
@@ -79,11 +80,11 @@ public class CarJobInvoiceService {
 
 
 
-            double operationsCharge = calculateOperationsCharge(jobOperations);
+            BigDecimal operationsCharge = calculateOperationsCharge(jobOperations);
 
-            double partsCharge = calculatePartsCharge(jobParts);
+            BigDecimal partsCharge = calculatePartsCharge(jobParts);
 
-            double totalCharge = partsCharge + operationsCharge;
+            BigDecimal totalCharge = partsCharge.add(operationsCharge);
 
             carJobInvoice.setOperationsCharge(operationsCharge);
             carJobInvoice.setPartsCharge(partsCharge);
@@ -149,28 +150,28 @@ public class CarJobInvoiceService {
 
 
 
-    public double calculateOperationsCharge(List<JobOperation> jobOperations){
-        double operationsCharge  = 0;
+    public BigDecimal calculateOperationsCharge(List<JobOperation> jobOperations){
+        BigDecimal operationsCharge  = new BigDecimal("0");
         for(JobOperation jobOperation : jobOperations) {
 
-            double price = jobOperation.getOperation().getPrice();
-            operationsCharge = operationsCharge + price ;
+            BigDecimal price = jobOperation.getOperation().getPrice();
+            operationsCharge = operationsCharge.add(price);
         }
-            double operationsWithVAT = operationsCharge * 1.21;
+            BigDecimal operationsWithVAT = operationsCharge.multiply(new BigDecimal(1.21));
             return operationsWithVAT;
     }
 
 
-    public double calculatePartsCharge(List<JobPart> jobParts){
-        double partsCharge = 0;
+    public BigDecimal calculatePartsCharge(List<JobPart> jobParts){
+        BigDecimal partsCharge = new BigDecimal(0);
         for(JobPart jobPart : jobParts){
 
-            double price = jobPart.getPart().getPrice();
-            double quantity = jobPart.getQuantity();
-            double charge = price * quantity;
-            partsCharge = partsCharge +charge;
+            BigDecimal price = (jobPart.getPart().getPrice());
+            BigDecimal quantity = jobPart.getQuantity();
+            BigDecimal charge = price.multiply(quantity);
+            partsCharge = partsCharge.add(charge);
         }
-        double partsWithVAT = partsCharge * 1.21;
+        BigDecimal partsWithVAT = partsCharge.multiply(new BigDecimal(1.21)) ;
         return partsWithVAT;
     }
 

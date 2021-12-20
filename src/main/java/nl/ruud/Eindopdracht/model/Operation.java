@@ -17,7 +17,7 @@ public class Operation {
 
     private String description;
 
-    private double price;
+    private BigDecimal price;
 
 
     @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL)
@@ -28,7 +28,7 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(String description, double price, List<JobOperation> operations) {
+    public Operation(String description, BigDecimal price, List<JobOperation> operations) {
         this.description = description;
         this.price = price;
         this.operations = operations;
@@ -50,12 +50,13 @@ public class Operation {
         this.description = description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;}
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
     public List<JobOperation> getOperations() {
         return operations;

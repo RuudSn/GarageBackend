@@ -3,6 +3,7 @@ package nl.ruud.Eindopdracht.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name="jobparts")
@@ -25,14 +26,14 @@ public class JobPart {
     @JsonIgnore
     private CarJob carJob;
 
-    private double quantity;
+    private BigDecimal quantity;
 
 
     public JobPart() {
     }
 
 
-    public JobPart( CarJob carJob, double quantity) {
+    public JobPart( CarJob carJob, BigDecimal quantity) {
         this.part = part;
         this.carJob = carJob;
         this.quantity = quantity;
@@ -57,11 +58,11 @@ public class JobPart {
         this.carJob = carJob;
     }
 
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +37,7 @@ public class JobPartController {
                                              @PathVariable("part_id")Long partId,
                                              @RequestBody JobPartInputDto dto) {
 
-        double quantity = dto.getQuantity();
+        BigDecimal quantity = dto.getQuantity();
 
         JobPartID ID = jobPartService.addJobPart(carJobId, partId, quantity);
 
@@ -88,7 +89,7 @@ public class JobPartController {
     public ResponseEntity<Object> updateJobPart(@PathVariable("carjob_id") Long carJobId,
                                                 @PathVariable("part_id") Long partId,
                                                 @RequestBody JobPartInputDto dto) {
-        double quantity = dto.getQuantity();
+        BigDecimal quantity = dto.getQuantity();
         jobPartService.updateJobPart(carJobId, partId, quantity);
         return ResponseEntity.noContent().build().ok("Updated");
     }

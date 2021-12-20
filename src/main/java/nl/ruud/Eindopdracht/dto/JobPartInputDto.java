@@ -2,16 +2,15 @@ package nl.ruud.Eindopdracht.dto;
 
 import nl.ruud.Eindopdracht.model.JobPart;
 
+import java.math.BigDecimal;
+
 public class JobPartInputDto {
 
     private Long partId;
 
     private Long jobId;
 
-    private double quantity;
-
-
-
+    private BigDecimal quantity;
 
 
     public Long getPartId() {
@@ -30,11 +29,11 @@ public class JobPartInputDto {
         this.jobId = jobId;
     }
 
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 }

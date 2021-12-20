@@ -2,6 +2,7 @@ package nl.ruud.Eindopdracht.controller;
 
 
 
+import nl.ruud.Eindopdracht.dto.InvoiceDto;
 import nl.ruud.Eindopdracht.dto.InvoiceInputDto;
 import nl.ruud.Eindopdracht.model.CarJobInvoice;
 import nl.ruud.Eindopdracht.service.CarJobInvoiceService;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,13 +39,21 @@ public class CarJobInvoiceController {
     @GetMapping("")
     public ResponseEntity<Object> getInvoices() {
         List<CarJobInvoice> carJobInvoices = carJobInvoiceService.getInvoices();
-
-        return ResponseEntity.ok().body(carJobInvoices);
+        List<InvoiceDto> Dtos = new ArrayList<>();
+        for(CarJobInvoice invoice : carJobInvoices ){
+            InvoiceDto dto = new InvoiceDto();
+            dto = dto.fromInvoice(invoice);
+            Dtos.add(dto);
+        }
+        return ResponseEntity.ok().body(Dtos);
     }
 
     @GetMapping("/{carjobinvoice_id}")
     public ResponseEntity<Object> getInvoiceById(@PathVariable("carjobinvoice_id") Long id ){
-        return ResponseEntity.ok().body(carJobInvoiceService.getInvoiceById(id));
+        CarJobInvoice invoice = carJobInvoiceService.getInvoiceById(id);
+        InvoiceDto dto = new InvoiceDto();
+        dto = dto.fromInvoice(invoice);
+        return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping("")

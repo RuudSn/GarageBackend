@@ -5,13 +5,15 @@ import nl.ruud.Eindopdracht.model.JobPart;
 import nl.ruud.Eindopdracht.model.JobPartID;
 import nl.ruud.Eindopdracht.model.Part;
 
+import java.math.BigDecimal;
+
 public class JobPartDto {
 
     private JobPartID ID;
 
     private String description;
 
-    private double quantity;
+    private BigDecimal quantity;
 
 
     public static JobPartDto fromJobPart(JobPart jobPart){
@@ -32,11 +34,11 @@ public class JobPartDto {
     }
 
 
-    public double getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 

@@ -4,6 +4,7 @@ package nl.ruud.Eindopdracht.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CarJobInvoiceTest {
         partDescriptions.add("part1");
         partDescriptions.add("part2");
         this.invoice = new CarJobInvoice("jansen", "test", operationDescriptions,
-                50.00,partDescriptions,100.50, 160.00);
+                BigDecimal.valueOf(50.00),partDescriptions,BigDecimal.valueOf(100.50), BigDecimal.valueOf(160.00));
     }
 
 
@@ -61,22 +62,22 @@ public class CarJobInvoiceTest {
 
     @Test
     void testGetOperationsCharge(){
-       double expect = 50.00;
-       double charge = this.invoice.getOperationsCharge();
+       BigDecimal expect = new BigDecimal(50.00);
+       BigDecimal charge = this.invoice.getOperationsCharge();
        assertEquals(expect, charge);
     }
 
     @Test
     void testGetPartsCharge(){
-        double expect = 100.50;
-        double charge = this.invoice.getPartsCharge();
+        BigDecimal expect = new BigDecimal(100.50);
+        BigDecimal charge = this.invoice.getPartsCharge();
         assertEquals(expect, charge);
     }
 
     @Test
     void testGetTotalCharge(){
-        double expect = 160.00;
-        double total = this.invoice.getTotalCharge();
+        BigDecimal expect = new BigDecimal(160.00);
+        BigDecimal total = this.invoice.getTotalCharge();
         assertEquals(expect, total);
     }
 
@@ -92,10 +93,10 @@ public class CarJobInvoiceTest {
 
     @Test
     void testSetTotalCharge(){
-        double newtotal = 300.25;
-        double expect = 300.25;
-        this.invoice.setTotalCharge(300.25);
-        double total = this.invoice.getTotalCharge();
+        BigDecimal newtotal = new BigDecimal(300.25);
+        BigDecimal expect = new BigDecimal(300.25);
+        this.invoice.setTotalCharge(newtotal);
+        BigDecimal total = this.invoice.getTotalCharge();
         assertEquals(expect, total );
     }
 
