@@ -31,11 +31,10 @@ public class Part {
     public Part() {
     }
 
-    public Part( String description, BigDecimal price, Long quantity, List<JobPart> parts) {
+    public Part( String description, BigDecimal price, Long quantity) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
-        this.parts = parts;
     }
 
     public Long getId() {

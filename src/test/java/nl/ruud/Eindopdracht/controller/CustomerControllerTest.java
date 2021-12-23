@@ -39,7 +39,7 @@ public class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
 
-
+//werkt niet
     @Test
     public void testHTTPRequestMatching() throws Exception{
 

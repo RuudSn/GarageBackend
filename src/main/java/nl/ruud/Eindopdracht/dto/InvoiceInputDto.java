@@ -16,9 +16,12 @@ public class InvoiceInputDto {
     public String licensePlate;
 
 
+    
+//Niet nodig,kan weg
     public CarJobInvoice toInvoice(){
         CarJobInvoice invoice = new CarJobInvoice();
         invoice.setCustomerName(customerName);
+
         return invoice;
     }
 

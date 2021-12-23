@@ -45,7 +45,7 @@
 						"{part-Id}"
 					]
 				},
-				"description": "Registreer gebruikte standaard onderdelen. Selecteer met carjob-Id en/of part-Id, voer in de body het aantal in."
+				"description": "Registreer gebruikte standaard onderdelen. Selecteer met carjob-Id en/of part-Id, voer in de body het aantal in. (Voor tijdseenheden: Id = 1.)"
 			},
 			"response": []
 		},

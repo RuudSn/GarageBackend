@@ -10,9 +10,10 @@ import java.util.List;
 public interface CarJobRepository extends JpaRepository<CarJob, Long> {
 
     List<CarJob> findByStatus(CarJobStatus status);
-    CarJob findByCarLicensePlate(String licensePlate);
-    CarJob findByCustomerNameAndCustomerEmail(String name, String email);
-    CarJob findByCustomerNameAndCustomerTelephone(String name, String telephone);
+    CarJob findByStatusAndCarLicensePlate(CarJobStatus status,String licensePlate);
+    CarJob findByStatusAndCustomerNameAndCustomerEmail(CarJobStatus status, String name, String email);
+
+    CarJob findByStatusAndCustomerNameAndCustomerTelephone(CarJobStatus status, String name, String telephone);
 
 
 }

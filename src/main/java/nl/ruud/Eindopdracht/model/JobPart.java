@@ -32,14 +32,11 @@ public class JobPart {
     public JobPart() {
     }
 
-
     public JobPart( CarJob carJob, BigDecimal quantity) {
         this.part = part;
         this.carJob = carJob;
         this.quantity = quantity;
     }
-
-
 
 
     public Part getPart() {

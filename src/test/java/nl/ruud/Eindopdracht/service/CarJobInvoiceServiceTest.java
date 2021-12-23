@@ -102,6 +102,7 @@ public class CarJobInvoiceServiceTest {
 
         Operation operation = new Operation();
         operation.setDescription("testOperation");
+        operation.setPrice(BigDecimal.valueOf(50.00));
 
         JobOperation jobOperation = new JobOperation();
         jobOperation.setOperation(operation);
@@ -148,7 +149,7 @@ public class CarJobInvoiceServiceTest {
         jobParts.add(jobPart2);
 
         Mockito
-                .doReturn(job).when(carJobRepository).findByCustomerNameAndCustomerEmail("jansen","jans@mail" );
+                .doReturn(job).when(carJobRepository).findByStatusAndCustomerNameAndCustomerEmail(CarJobStatus.COMPLETED,"jansen","jans@mail" );
         Mockito
                 .doReturn(jobOperations).when(jobOperationRepository).findAllByCarJobId(carJobId);
 
@@ -165,11 +166,13 @@ public class CarJobInvoiceServiceTest {
                 .verify(carJobInvoiceRepository).save(carJobInvoiceCaptor.capture());
 
         CarJobInvoice carJobInvoice1 = carJobInvoiceCaptor.getValue();
-        double expect = (2*25.50)*1.21 + (1*100)*1.21;
 
+        BigDecimal expect = BigDecimal.valueOf((100 + 25.50 )*1.21);
+        BigDecimal  var =  carJobInvoice1.getPartsCharge();                    //hier is gekozen voor afronding, bij hogere
+        BigDecimal found = var.setScale(3, RoundingMode.HALF_EVEN);    // gewenste nauwkeurigheid de exacte berekening navolgen
     //ASSERT
         assertEquals("jansen", carJobInvoice1.getCustomerName() );
-        assertEquals(expect, carJobInvoice1.getPartsCharge() );
+        assertEquals(expect, found);
         assertEquals("testOperation", carJobInvoice1.getOperationDescriptions().get(0));
     }
 
@@ -240,9 +243,11 @@ public class CarJobInvoiceServiceTest {
         List<JobOperation> jobOperations = new ArrayList<>();
         jobOperations.add(jobOperation);
         
-        BigDecimal expect = BigDecimal.valueOf(50.50 * 1.21);
-        BigDecimal var =  carJobInvoiceService.calculateOperationsCharge(jobOperations);    // incl 21% VAT
-        BigDecimal found = var.setScale(3, RoundingMode.HALF_EVEN);
+        BigDecimal x =  new BigDecimal(50.50 );
+        BigDecimal y = new BigDecimal(1.21);    // incl 21% VAT
+        BigDecimal expect = y.multiply(x);
+
+        BigDecimal found =     carJobInvoiceService.calculateOperationsCharge(jobOperations);
         assertEquals(expect, found);
     }
 
@@ -270,9 +275,9 @@ public class CarJobInvoiceServiceTest {
         BigDecimal expected = BigDecimal.valueOf(2*50.00 + 2*25.50).multiply(BigDecimal.valueOf(1.21));
         BigDecimal var = carJobInvoiceService.calculatePartsCharge(jobParts);
 
-        BigDecimal found = var.setScale(3, RoundingMode.HALF_EVEN);
-        assertEquals(expected, found );
-    }
+        BigDecimal found = var.setScale(3, RoundingMode.HALF_EVEN);   //hier is gekozen voor afronding, bij hogere
+        assertEquals(expected, found );                                      // gewenste nauwkeurigheid  de exacte berekening navolgen
+    }                                                                          //met new Bigdecimal variabelen
     @Test
     public void testChangeStatus(){
         CarJob carJob = new CarJob();
@@ -311,7 +316,7 @@ public class CarJobInvoiceServiceTest {
         carJob.setCustomer(customer);
 
         Mockito
-                .doReturn(carJob).when(carJobRepository).findByCustomerNameAndCustomerEmail("jansen","jansen@mail" );
+                .doReturn(carJob).when(carJobRepository).findByStatusAndCustomerNameAndCustomerEmail(CarJobStatus.COMPLETED,"jansen","jansen@mail" );
 
         CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  null, "jansen", null, "jansen@mail",null);
 
@@ -327,7 +332,7 @@ public class CarJobInvoiceServiceTest {
         carJob.setCustomer(customer);
 
         Mockito
-                .doReturn(carJob).when(carJobRepository).findByCustomerNameAndCustomerTelephone("jansen", "1234" );
+                .doReturn(carJob).when(carJobRepository).findByStatusAndCustomerNameAndCustomerTelephone(CarJobStatus.COMPLETED, "jansen", "1234" );
 
         CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  null, "jansen", "1234", null,null);
 
@@ -341,9 +346,10 @@ public class CarJobInvoiceServiceTest {
         Car car = new Car();
         car.setLicensePlate("123AS45");
         carJob.setCar(car);
+        carJob.setStatus(CarJobStatus.DONOTEXECUTE);
 
         Mockito
-                .doReturn(carJob).when(carJobRepository).findByCarLicensePlate("123AS45" );
+                .doReturn(carJob).when(carJobRepository).findByStatusAndCarLicensePlate( CarJobStatus.COMPLETED,"123AS45" );
 
         CarJob found = carJobInvoiceService.getCarJobFromOptionalInput(  null, null, null, null,"123AS45");
 
@@ -385,6 +391,8 @@ public class CarJobInvoiceServiceTest {
         Mockito.verify(carJobInvoiceRepository, Mockito.times(1)).deleteById(1L);
 
     }
+
+
 
 
 

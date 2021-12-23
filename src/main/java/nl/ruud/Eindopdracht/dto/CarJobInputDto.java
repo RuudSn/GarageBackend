@@ -24,7 +24,6 @@ public class CarJobInputDto {
     @Max(value = 255, message = "remarks should not be greater than 250")
     private String remarks;
 
-
     private Long customerId;
 
     private Long carId;

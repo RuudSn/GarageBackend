@@ -51,7 +51,7 @@ public class CarJobInvoiceService {
    }
 
 
-    // Ophalen juiste carjob, daaruit verzamelen info, berekenen totaalbedragen incl. btw  en genereren factuur.
+    // Ophalen juiste carjob, daaruit verzamelen info, berekenen totaalbedragen incl. btw  en genereren/opslaan factuur.
 
     public Long addCarJobInvoice(Long carJobId, String name, String telephone, String email, String licensePlate) {
 
@@ -62,7 +62,7 @@ public class CarJobInvoiceService {
         carJobId = carJob.getId();
 
         boolean statusOk = StatusCheck(carJob);
-       if(statusOk){
+        if(statusOk){
 
             carJobInvoice.setCustomerName(carJob.getCustomer().getName());
             carJobInvoice.setRemarks(carJob.getRemarks());
@@ -113,17 +113,55 @@ public class CarJobInvoiceService {
             else{ carJob = carJobRepository.findById(carJobId).get(); }
 
         }else if ( name != null && email != null){
-            carJob = carJobRepository.findByCustomerNameAndCustomerEmail(name, email);
+            carJob = getCarJobFromNameAndEmail(name, email);
 
         }else if (name != null && telephone != null) {
-            carJob = carJobRepository.findByCustomerNameAndCustomerTelephone(name, telephone);
+            carJob = getCarJobFromNameAndtelephone(name, telephone);
 
         }else if(licensePlate != null){
-            carJob = carJobRepository.findByCarLicensePlate(licensePlate);
+            carJob = getCarJobFromLicensePlate(licensePlate);
 
         }else {throw new BadRequestException("foutieve invoer");}
-
         return carJob; }
+
+// omdat een customer of car meerdere carjobs kan hebben moet status ook worden meegenomen(uitgaande van één job te invoicen job per customer)
+
+    public CarJob getCarJobFromLicensePlate(String licensePlate){
+        CarJob job = carJobRepository.findByStatusAndCarLicensePlate(CarJobStatus.COMPLETED, licensePlate);
+        CarJob jobB = carJobRepository.findByStatusAndCarLicensePlate(CarJobStatus.DONOTEXECUTE, licensePlate);
+        CarJob jobC = new CarJob();
+        if(job != null){
+            jobC = job;
+        }else if(jobB != null){
+            jobC  = jobB;
+        }else{ throw new BadRequestException();}
+        return jobC;
+    }
+
+    public CarJob getCarJobFromNameAndtelephone(String name, String telephone) {
+        CarJob job = carJobRepository.findByStatusAndCustomerNameAndCustomerTelephone(CarJobStatus.COMPLETED, name, telephone);
+        CarJob jobB = carJobRepository.findByStatusAndCustomerNameAndCustomerTelephone(CarJobStatus.DONOTEXECUTE, name, telephone);
+        CarJob jobC = new CarJob();
+        if (job != null) {
+            jobC = job;
+        } else if (jobB != null) {
+            jobC = jobB;
+        }else{ throw new BadRequestException();}
+        return jobC;
+    }
+
+    public CarJob getCarJobFromNameAndEmail(String name, String email) {
+        CarJob job = carJobRepository.findByStatusAndCustomerNameAndCustomerEmail(CarJobStatus.COMPLETED, name, email);
+        CarJob jobB = carJobRepository.findByStatusAndCustomerNameAndCustomerEmail(CarJobStatus.DONOTEXECUTE, name, email);
+        CarJob jobC = new CarJob();
+        if (job != null) {
+            jobC = job;
+        } else if (jobB != null) {
+            jobC = jobB;
+        }else{ throw new BadRequestException();}
+        return jobC;
+    }
+
 
 
 

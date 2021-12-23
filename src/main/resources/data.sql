@@ -2,14 +2,13 @@
 INSERT INTO users (username, password, email, enabled)
 
 VALUES     ('user', '$2a$12$TAKl2cn3O0KyQQed8d00MeAVomp2uQvNCJ4K8lQNwn1LLxuaASQ5i','user@mail.nl', TRUE),
-           ('admin', '$2a$12$TAKl2cn3O0KyQQed8d00MeAVomp2uQvNCJ4K8lQNwn1LLxuaASQ5i', 'admin@mail.nl', TRUE),
-           ('ruud', '$2a$12$TAKl2cn3O0KyQQed8d00MeAVomp2uQvNCJ4K8lQNwn1LLxuaASQ5i', 'ruud@mail.nl', TRUE);
+           ('admin', '$2a$12$TAKl2cn3O0KyQQed8d00MeAVomp2uQvNCJ4K8lQNwn1LLxuaASQ5i', 'admin@mail.nl', TRUE);
+
 
 INSERT INTO authorities (username, authority)
 
 VALUES    ('user', 'ROLE_USER'),
-          ('ruud', 'ROLE_USER'),
-          ('ruud', 'ROLE_ADMIN'),
+           ('admin', 'ROLE_USER'),
           ('admin', 'ROLE_ADMIN');
 
 
@@ -64,20 +63,25 @@ VALUES  ( 'workinghour complete on 10min.', 66.00, 1),
 
  VALUES ('67ER34', 'Ford taunus-Q', 1),
         ('34GW56', 'Ford capri 3L', 2),
-        ('88GD123', 'opel ascona 16s',3);
+        ('88GD123', 'opel ascona 16s',3),
+        ('12AB34', 'Opel manta', 4);
 
 INSERT INTO carjobs  (status, repair_date, remarks, customer_id, car_id)
 
 VALUES  ('PLANNED', '2021-12-10 10:30', 'airco does not work', 1, 1 ),
         ('COMPLETED', '2020-11-23 09:00', 'replaced timing-belt', 2, 2),
-        ('COMPLETED', '2021-10-13 12:30', 'changed tires/fixed waterpump', 3, 3);
+        ('COMPLETED', '2021-10-13 12:30', 'changed tire/fixed waterpump ', 3, 3),
+        ('PLANNED', '2022-01-12 10:00', 'fix a lot of things', 3, 3);
 
 INSERT INTO joboperations  (operation_id, carjob_id )
 VALUES  ( 1, 2),
-        (6, 2);
+        (6, 2),
+        (1, 3);
+
 
 INSERT INTO jobparts  (part_id,  carjob_id, quantity)
-VALUES  (20, 2, 1);
+VALUES  (20, 2, 1),
+        (1, 3, 1.5);
 
 
 

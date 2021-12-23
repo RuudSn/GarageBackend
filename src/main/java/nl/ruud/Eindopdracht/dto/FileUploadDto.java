@@ -25,7 +25,6 @@ public class FileUploadDto {
         Dto.setDescription(fileUpload.getDescription());
         Dto.setFileName(fileUpload.getFileName());
         Dto.setMediaType(fileUpload.getMediaType());
-        Dto.setMediaType(fileUpload.getMediaType());
         return Dto;
     }
 

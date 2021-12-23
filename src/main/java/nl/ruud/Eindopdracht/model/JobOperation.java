@@ -24,8 +24,6 @@ public class JobOperation {
     @JsonIgnore
     private CarJob carJob;
 
-    //private double quantity;  wel description/remarks?
-
 
 
     public JobOperation() {

@@ -38,12 +38,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, String email, Set<Authority> authorities) {
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
         this.email = email;
-        this.authorities = authorities;
     }
 
 

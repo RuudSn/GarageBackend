@@ -28,10 +28,9 @@ public class Operation {
     public Operation() {
     }
 
-    public Operation(String description, BigDecimal price, List<JobOperation> operations) {
+    public Operation(String description, BigDecimal price) {
         this.description = description;
         this.price = price;
-        this.operations = operations;
     }
 
     public Long getId() {

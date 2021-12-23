@@ -36,7 +36,7 @@
 						"{operation-Id}"
 					]
 				},
-				"description": "Voeg uitgevoerde standaardhandelingen toe. Gebruik Id van de operation en van carJob. Evt. extra handelingen in aantal uren of delen daarvan (Id = 3)."
+				"description": "Voeg uitgevoerde standaardhandelingen toe. Gebruik Id van de operation en van carJob. Evt. éxtra handelingen invoeren in tijdseenheden bij job-Parts (Id = 1)."
 			},
 			"response": []
 		},

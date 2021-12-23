@@ -37,8 +37,6 @@ public class CarJobInvoice {
     public CarJobInvoice() {
     }
 
-
-
     public CarJobInvoice( String customerName, String remarks, List<String> operationDescriptions,
                          BigDecimal operationsCharge,List<String> partDescriptions,
                                                             BigDecimal partsCharge, BigDecimal totalCharge) {
