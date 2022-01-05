@@ -7,11 +7,14 @@ import nl.ruud.Eindopdracht.model.FileUpload;
 import nl.ruud.Eindopdracht.repository.FileUploadRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -56,6 +59,26 @@ public class FileUploadService {
             throw new RecordNotFoundException();
         }
     }
+            //werkt nog niet
+    public Resource downloadFile(long id) {
+        Optional<FileUpload> stored = fileUploadRepository.findById(id);
+
+        if (stored.isPresent()) {
+            String fileName = stored.get().getFileName();
+            Path path = this.uploads.resolve(fileName);
+
+            Resource resource = null;
+            try {
+                resource = new UrlResource(path.toUri());
+                return resource;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            throw new RecordNotFoundException(); }
+        return null;
+    }
 
 
     public long uploadFile(FileUploadInputDto dto) {
@@ -73,6 +96,9 @@ public class FileUploadService {
 
         return storedFile.getId();
     }
+
+
+
 
     public void deleteFile(long id) {
         if (!fileUploadRepository.existsById(id)) throw new RecordNotFoundException();

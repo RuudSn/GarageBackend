@@ -49,6 +49,17 @@ public class FileUploadController {
         return ResponseEntity.ok().body(Dto);
     }
 
+    @GetMapping("/{id}/download")
+    public ResponseEntity downloadFile(@PathVariable long id) {
+        Resource resource = fileUploadService.downloadFile(id);
+        String mediaType = "application/octet-stream";
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(mediaType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+
 
 
     @PostMapping(value = "", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},

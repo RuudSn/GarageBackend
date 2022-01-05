@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileUploadInputDto {
 
 
+    private String fileName;
+
     private String title;
 
     private String description;
@@ -16,6 +18,7 @@ public class FileUploadInputDto {
 
     public FileUpload toFileUpload(FileUploadInputDto Dto){
         FileUpload fileUpload = new FileUpload();
+        fileUpload.setFileName(Dto.getFileName());
         fileUpload.setTitle(Dto.getTitle());
         fileUpload.setDescription(Dto.getDescription());
         fileUpload.setMediaType(Dto.getMediaType());
@@ -53,5 +56,13 @@ public class FileUploadInputDto {
 
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

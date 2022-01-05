@@ -80,4 +80,6 @@ public class FileUpload {
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType;
     }
+
+
 }

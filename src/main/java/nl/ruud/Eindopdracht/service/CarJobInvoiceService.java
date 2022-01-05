@@ -52,6 +52,7 @@ public class CarJobInvoiceService {
 
 
     // Ophalen juiste carjob, daaruit verzamelen info, berekenen totaalbedragen incl. btw  en genereren/opslaan factuur.
+    // Beter, nog te doen?,  :  gebruik mkn. v. builder-pattern   (en toch wél interfaces ivm dependency inversion principle)
 
     public Long addCarJobInvoice(Long carJobId, String name, String telephone, String email, String licensePlate) {
 
@@ -116,7 +117,7 @@ public class CarJobInvoiceService {
             carJob = getCarJobFromNameAndEmail(name, email);
 
         }else if (name != null && telephone != null) {
-            carJob = getCarJobFromNameAndtelephone(name, telephone);
+            carJob = getCarJobFromNameAndTelephone(name, telephone);
 
         }else if(licensePlate != null){
             carJob = getCarJobFromLicensePlate(licensePlate);
@@ -124,7 +125,7 @@ public class CarJobInvoiceService {
         }else {throw new BadRequestException("foutieve invoer");}
         return carJob; }
 
-// omdat een customer of car meerdere carjobs kan hebben moet status ook worden meegenomen(uitgaande van één job te invoicen job per customer)
+// omdat een customer of car meerdere carjobs kan hebben moet status ook worden meegenomen(uitgaande van max één te invoicen job per customer)
 
     public CarJob getCarJobFromLicensePlate(String licensePlate){
         CarJob job = carJobRepository.findByStatusAndCarLicensePlate(CarJobStatus.COMPLETED, licensePlate);
@@ -138,7 +139,7 @@ public class CarJobInvoiceService {
         return jobC;
     }
 
-    public CarJob getCarJobFromNameAndtelephone(String name, String telephone) {
+    public CarJob getCarJobFromNameAndTelephone(String name, String telephone) {
         CarJob job = carJobRepository.findByStatusAndCustomerNameAndCustomerTelephone(CarJobStatus.COMPLETED, name, telephone);
         CarJob jobB = carJobRepository.findByStatusAndCustomerNameAndCustomerTelephone(CarJobStatus.DONOTEXECUTE, name, telephone);
         CarJob jobC = new CarJob();

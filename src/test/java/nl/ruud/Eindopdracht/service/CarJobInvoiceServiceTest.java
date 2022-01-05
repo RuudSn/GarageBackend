@@ -50,7 +50,10 @@ public class CarJobInvoiceServiceTest {
     @BeforeEach
     void setup() {
         CarJobInvoiceService carJobInvoiceService;
+
     }
+
+
 
 
     @Captor
@@ -377,6 +380,24 @@ public class CarJobInvoiceServiceTest {
         assertEquals(carJob ,found);
     }
 
+
+    @Test
+    public void testGetCarjobFromNameAndTelephone(){
+        CarJob carJob = new CarJob();
+        Customer customer = new Customer();
+        customer.setName("jansen");
+        customer.setTelephone("1234");
+        carJob.setCustomer(customer);
+
+        Mockito
+                .doReturn(carJob).when(carJobRepository).findByStatusAndCustomerNameAndCustomerTelephone(CarJobStatus.COMPLETED, "jansen", "1234" );
+
+        CarJob found = carJobInvoiceService.getCarJobFromNameAndTelephone("jansen", "1234");
+
+        assertEquals(carJob, found);
+
+
+    }
 
     @Test
     public void testRemoveCarJobInvoiceById() {
