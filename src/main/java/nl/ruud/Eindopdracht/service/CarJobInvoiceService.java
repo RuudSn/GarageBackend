@@ -52,7 +52,6 @@ public class CarJobInvoiceService {
 
 
     // Ophalen juiste carjob, daaruit verzamelen info, berekenen totaalbedragen incl. btw  en genereren/opslaan factuur.
-    // Beter, nog te doen?,  :  gebruik mkn. v. builder-pattern   (en toch wél interfaces ivm dependency inversion principle)
 
     public Long addCarJobInvoice(Long carJobId, String name, String telephone, String email, String licensePlate) {
 
