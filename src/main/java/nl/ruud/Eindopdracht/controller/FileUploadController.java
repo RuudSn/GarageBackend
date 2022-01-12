@@ -48,7 +48,7 @@ public class FileUploadController {
         FileUploadDto Dto = fileUploadService.getFileById(id);
         return ResponseEntity.ok().body(Dto);
     }
-    //werkt niet
+
     @GetMapping("/{id}/download")
     public ResponseEntity downloadFile(@PathVariable long id) {
         Resource resource = fileUploadService.downloadFile(id);
@@ -66,7 +66,7 @@ public class FileUploadController {
                      produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Object> uploadFile( FileUploadInputDto Dto) {
 
-        fileUploadService.init();
+
         long newId = fileUploadService.uploadFile(Dto);
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")

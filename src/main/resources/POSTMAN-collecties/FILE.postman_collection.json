@@ -33,7 +33,8 @@
 						"v1",
 						"files"
 					]
-				}
+				},
+				"description": "Verkrijg een overzicht van opgeslagen bestanden."
 			},
 			"response": []
 		},
@@ -66,7 +67,8 @@
 						"{ID}",
 						"download"
 					]
-				}
+				},
+				"description": "Vraag een (overzicht van) een bestand op met Id."
 			},
 			"response": []
 		},
@@ -108,7 +110,7 @@
 						"files"
 					]
 				},
-				"description": "Upload een file, gebruik form-data, zie de body waar bijgaande gegevens in te vullen."
+				"description": "Upload een file, gebruik form-data, zie de body waar bijgaande gegevens in te vullen. (Bij Filename de juiste name invullen!)\n\nZorg voor een upload-folder. (evt. mbv. init methode in fileUploadService)"
 			},
 			"response": []
 		},
@@ -140,7 +142,42 @@
 						"files",
 						"{ID}"
 					]
-				}
+				},
+				"description": "Verwijder een bestand en z'n gegevens met Id."
+			},
+			"response": []
+		},
+		{
+			"name": "file   {ID}/download",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTY0MTMxOTk5NiwiaWF0IjoxNjQwMDIzOTk2fQ.qTCtgAI5g3J6x_UI7Ghl2iwZmwqmTOPsp3I3OMRYWsw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/files//download",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"files",
+						"",
+						"download"
+					]
+				},
+				"description": "Download bestand mbv Id, kies onder SEND: ' Send and Download ' en sla het bestand op."
 			},
 			"response": []
 		}

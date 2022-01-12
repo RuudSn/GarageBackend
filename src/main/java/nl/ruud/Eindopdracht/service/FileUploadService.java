@@ -38,6 +38,7 @@ public class FileUploadService {
         this.fileUploadRepository = fileUploadRepository;
     }
 
+        //?  alléén toepassen eerste maal ,wanneer geen uploads-folder aanwezig (in uploadFile)
     public void init() {
         try {
             Files.createDirectory(uploads);
@@ -45,7 +46,6 @@ public class FileUploadService {
             throw new RuntimeException("Could not initialize folder for upload!");
         }
     }
-
 
 
     public Iterable<FileUpload> getFiles() {
@@ -69,7 +69,11 @@ public class FileUploadService {
         }
     }
 
-            //werkt nog niet (controll)
+                   //?  public boolean fileExistsById(long id) {
+                  //      return fileUploadRepository.existsById(id);
+                 //   }
+
+
     public Resource downloadFile(long id) {
         Optional<FileUpload> stored = fileUploadRepository.findById(id);
 
@@ -115,9 +119,26 @@ public class FileUploadService {
 
 
     public void deleteFile(long id) {
-        if (!fileUploadRepository.existsById(id)) throw new RecordNotFoundException();
-        fileUploadRepository.deleteById(id);
+        Optional<FileUpload> stored = fileUploadRepository.findById(id);
+
+        if (stored.isPresent()) {
+            String filename = stored.get().getFileName();
+            Path location = this.uploads.resolve(filename);
+            try {
+                Files.deleteIfExists(location);
+            }
+            catch (IOException ex) {
+                throw new RuntimeException("File not found");
+            }
+
+            fileUploadRepository.deleteById(id);
+        }
+        else {
+            throw new RecordNotFoundException();
+        }
     }
+
+
 
 
 
